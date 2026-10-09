@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6eedd">
+<meta property="og:title" content="POKER CLUB — приложение игрока">
+<meta property="og:description" content="Кликабельный прототип">
+<meta property="og:type" content="website">
+<meta name="description" content="Кликабельный прототип">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%23f6eedd'/%3E%3Cpath d='M24 4 44 24 24 44 4 24Z' fill='none' stroke='%23561a1b' stroke-width='2.4'/%3E%3Ctext x='24' y='31' text-anchor='middle' font-family='Georgia,serif' font-size='20' fill='%23561a1b'%3EP%3C/text%3E%3C/svg%3E">
+<title>POKER CLUB — приложение игрока</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper-50:#fffaf0;--paper-100:#f6eedd;--paper-200:#f8e9d2;--paper-300:#e9d9bd;--paper-400:#cdbfa9;
+  --bg-tertiary:#eadcc4;--bg-inset:#e6d6bc;
+  --ink:#2b1012;--text-2:#65554f;--text-3:#6e5d57;
+  --burgundy:#561a1b;--wine:#851c2d;--red:#982020;
+  --wine-950:#190a0c;--wine-900:#230d10;--wine-800:#35131a;
+  --border:rgba(86,26,27,.18);--border-soft:rgba(86,26,27,.10);
+  --success:#4f9a6c;--gold:#c99a3c;--silver:#9aa0a6;--bronze:#b0703c;--bounty:#b394cc;
+  --shadow:0 8px 24px rgba(43,16,18,.10);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:'Onest',system-ui,-apple-system,sans-serif;color:var(--ink);background:#1b0f10;font-size:16px;line-height:1.35;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+input,textarea{font-family:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p{margin:0}
+.phone{position:relative;width:100%;max-width:430px;min-height:100vh;margin:0 auto;background:
+  radial-gradient(120% 40% at 70% 0%,#fffaf0 0%,rgba(255,250,240,0) 70%),
+  linear-gradient(180deg,#f6eedd 0%,#f3e8d1 100%);overflow-x:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
+@media(min-width:500px){body{padding:0}.phone{box-shadow:0 0 0 1px rgba(255,255,255,.06),0 0 80px rgba(0,0,0,.6)}}
+/* header */
+.hdr{position:sticky;top:0;z-index:30;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(246,238,221,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border-soft)}
+.logo{display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--burgundy)}
+.logo span{font-size:6.5px;letter-spacing:.18em;font-weight:600}
+.hdr-r{display:flex;align-items:center;gap:20px}
+.bell{position:relative;width:28px;height:28px;display:grid;place-items:center;color:var(--burgundy)}
+.bell i{position:absolute;top:2px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--wine);border:2px solid var(--paper-100)}
+.av{display:inline-grid;place-items:center;border-radius:50%;color:#fff;font-weight:600;flex:none;overflow:hidden;letter-spacing:0}
+.av.me{background:linear-gradient(135deg,#7d5a3c,#4b3326)}
+/* layout */
+.page{padding:0 14px calc(120px + env(safe-area-inset-bottom))}
+.pad-top{padding-top:22px}
+h1.t{font-size:33px;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+.sub{color:var(--text-2);font-size:14px;margin-top:8px}
+.cap{font-size:11.5px;font-weight:700;letter-spacing:.09em;color:var(--wine);text-transform:uppercase}
+h2.s{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.card{background:linear-gradient(180deg,#fbf2de,#f7e9d0);border:1px solid rgba(86,26,27,.13);border-radius:24px;box-shadow:var(--shadow)}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink);margin:22px 0 18px}
+.back u{text-underline-offset:3px;text-decoration-thickness:1.5px}
+/* live card */
+.live{position:relative;margin-top:24px;border-radius:24px;padding:18px 16px 14px;color:#f6eedd;overflow:hidden;background:linear-gradient(145deg,#6a1f23 0%,#521719 50%,#3d1014 100%);box-shadow:0 14px 30px rgba(58,16,19,.35)}
+.live::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.10) 42%,rgba(255,255,255,.02) 52%,transparent 60%);pointer-events:none}
+.live-top{position:relative;display:flex;justify-content:space-between;gap:10px}
+.live h3{font-size:29px;font-weight:500;line-height:1.08;text-transform:uppercase;letter-spacing:-.005em;max-width:200px;overflow-wrap:normal}
+.live .open{font-size:13px;opacity:.78;margin-top:12px;max-width:130px;line-height:1.3}
+.live-r{text-align:right;padding-top:2px;flex:none}
+.live-r .lv{font-size:12px;letter-spacing:.14em;opacity:.7;text-transform:uppercase}
+.live-r .tm{font-size:36px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.live-r .bl{font-size:11.5px;opacity:.78;margin-top:2px;white-space:nowrap}
+.live-bot{position:relative;margin-top:16px;padding-top:12px;border-top:1px dashed rgba(246,238,221,.28);display:flex;align-items:center;justify-content:space-between}
+.live-bot .pl{display:flex;align-items:center;gap:8px;font-size:14px;opacity:.85}
+.btn-light{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(#fbf0da,#efdcb8);color:var(--ink);font-weight:700;font-size:14px;border-radius:14px;padding:10px 14px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.live.idle{background:linear-gradient(145deg,#4a2a2c,#2e1618)}
+/* timeline */
+.sec-h{margin:34px 2px 6px}
+.tl{list-style:none;margin:6px 0 0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:11px;top:22px;bottom:22px;width:1.5px;background:rgba(86,26,27,.22)}
+.tl li{position:relative;display:flex;align-items:center;gap:14px;height:62px;padding:0 4px}
+.tl .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--burgundy);background:var(--paper-100);flex:none;margin-left:4px;position:relative;z-index:1}
+.tl li:first-child .dot{background:var(--wine);border-color:var(--wine);box-shadow:0 0 0 5px rgba(133,28,45,.15)}
+.tl .tx{flex:1;font-weight:600;font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl .tt{font-size:14px;color:var(--text-2);font-variant-numeric:tabular-nums}
+/* rating dark card */
+.rcard{position:relative;margin-top:26px;border-radius:24px;padding:22px 20px 18px;color:#f6eedd;overflow:hidden;background:linear-gradient(150deg,#5a1a1e,#3a1013);box-shadow:0 14px 30px rgba(58,16,19,.3);min-height:230px}
+.rcard svg.deco{position:absolute;right:0;bottom:0;width:100%;height:100%;pointer-events:none}
+.rcard>*:not(svg){position:relative}
+.rcard .l1{font-size:13px;opacity:.85;max-width:190px;line-height:1.3}
+.rcard .big{font-size:58px;font-weight:700;line-height:1;margin-top:10px}
+.rcard .l2{font-size:14px;font-weight:600;margin-top:2px}
+.rcard .l3{font-size:13px;opacity:.75;margin-top:8px;max-width:190px;line-height:1.35}
+.rcard a{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-weight:600;font-size:15px}
+.cta{display:flex;align-items:center;gap:16px;width:100%;height:76px;margin-top:14px;padding:0 22px;border-radius:20px;background:linear-gradient(180deg,#8d1f31,#7c1a2a);color:#fff;font-weight:700;font-size:16px;box-shadow:0 10px 22px rgba(133,28,45,.3);text-align:left}
+.cta .g{flex:1}
+/* news */
+.news{margin-top:14px;overflow:hidden;border-radius:24px}
+.news .img{height:210px;position:relative;overflow:hidden}
+.news .bd{padding:20px 18px 22px}
+.news .dt{font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--wine);text-transform:uppercase}
+.news h3{font-size:24px;font-weight:500;margin-top:12px;line-height:1.2}
+.news p{font-size:15px;color:var(--text-2);margin-top:12px;line-height:1.45}
+/* registered status */
+.regcard{display:flex;align-items:center;gap:12px;margin-top:10px;padding:14px 14px 14px 16px;border-radius:20px;background:linear-gradient(180deg,#fbf2de,#f4e3c4);border:1px solid rgba(86,26,27,.2)}
+.regcard .ok{width:36px;height:36px;border-radius:50%;background:var(--success);color:#fff;display:grid;place-items:center;flex:none}
+.regcard .m{flex:1;min-width:0}.regcard b{display:block;font-size:15px}.regcard small{color:var(--text-2);font-size:13px}
+.btn-sm{background:var(--burgundy);color:#fff;font-weight:600;font-size:14px;padding:10px 16px;border-radius:14px}
+/* tournaments */
+.tops{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 18px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;background:linear-gradient(#fbf0da,#f3e1c0);border:1.5px solid rgba(86,26,27,.3);font-weight:700;font-size:13.5px;box-shadow:0 4px 10px rgba(43,16,18,.07);color:var(--ink);white-space:nowrap}
+.tcard{display:block;margin-bottom:14px;overflow:hidden;cursor:pointer;position:relative}
+.cover{position:relative;overflow:hidden;background:#3a1013;color:#f6eedd}
+.cover .ct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:400;text-transform:uppercase;line-height:1.02;letter-spacing:.01em}
+.cover .mono{position:absolute;right:14px;bottom:12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:7px;letter-spacing:.2em;color:#f6eedd}
+.cnt{position:absolute;top:14px;right:14px;background:#fbf3df;color:var(--ink);border-radius:16px;padding:7px 12px 6px;text-align:center;z-index:2;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.cnt b{display:block;font-size:15.5px;font-weight:700;line-height:1.1}.cnt small{font-size:10.5px;color:var(--text-2);font-weight:500}
+.tw .cover{height:170px}.tw .cover .ct{font-size:44px}
+.tbody{padding:20px 16px 16px}
+.chip{display:inline-block;padding:11px 16px;border-radius:999px;background:var(--bg-inset);font-size:12px;font-weight:600;color:var(--text-2)}
+.chip.open{background:#ebd9bb;color:#6b4a2c}.chip.reg{background:#d9e9d9;color:#2e6a45}
+.tname{font-size:24px;font-weight:700;text-transform:uppercase;line-height:1.1;margin-top:16px;letter-spacing:-.005em;word-break:break-word}
+.tdate{font-size:15.5px;font-weight:700;color:var(--wine);margin-top:10px}
+.tdesc{font-size:14px;color:var(--text-2);line-height:1.45;margin-top:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tmeta{font-size:12.5px;color:var(--text-2);margin-top:12px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;border-radius:14px;background:linear-gradient(180deg,#8d1f31,#7a1a2a);color:#fff;font-weight:600;font-size:16px;margin-top:16px;box-shadow:0 6px 14px rgba(133,28,45,.25)}
+.btn.dis{background:#b0605c;box-shadow:none;cursor:default;opacity:.95}
+.btn.line{background:transparent;color:var(--burgundy);border:1.5px solid var(--burgundy);box-shadow:none}
+.btn.dark{background:var(--burgundy)}
+.btn.dis-soft{background:#e1cfc0;color:#9b8478;box-shadow:none}
+.th{display:flex}
+.th>div:first-child .cover{position:absolute;inset:0}
+.th .cover .ct{font-size:27px;left:0;right:0;padding:0 8px}
+.th .cnt{left:14px;right:auto;top:14px;padding:6px 11px 5px}
+.th .tbody{padding:16px 14px 14px;flex:1;min-width:0}
+.th .tname{font-size:22px;margin-top:14px}
+.th .btn{height:48px;font-size:15.5px}
+.th .chip{padding:10px 14px}
+/* hero */
+.hero{position:relative;height:280px;border-radius:28px;overflow:hidden;color:#f6eedd;display:flex;flex-direction:column;justify-content:flex-end;padding:20px 20px 18px;background:#190a0c}
+.hero.sm{height:172px;padding:18px 20px 16px}
+.hero .ek{font-size:12px;font-weight:600;letter-spacing:.14em;color:#d9ae5c;text-transform:uppercase}
+.hero h1{font-size:34px;font-weight:500;line-height:1.05;margin-top:8px;text-transform:uppercase;position:relative}
+.hero.sm h1{font-size:30px}
+.hero .dp{align-self:flex-start;margin-top:14px;padding:10px 16px;border-radius:999px;border:1px solid rgba(246,238,221,.3);background:rgba(25,10,12,.4);font-size:14px;font-weight:600;position:relative}
+.hero .ek{position:relative}
+.seg{display:flex;gap:2px;margin:16px 0;padding:4px;border-radius:20px;background:linear-gradient(#fbf2de,#f6e8cd);border:1.5px solid rgba(86,26,27,.2)}
+.seg button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 6px;border-radius:16px;font-size:13px;font-weight:600;color:var(--text-2);line-height:1.15;text-align:left}
+.seg button.on{background:linear-gradient(180deg,#8d1f31,#7a1a2a);color:#fff;box-shadow:0 6px 12px rgba(133,28,45,.3)}
+.seg button.on.dk{background:linear-gradient(#651e20,#4d1618)}
+.box{padding:22px 18px 20px}
+.box .cap{color:var(--burgundy)}
+.fmt{font-size:16px;line-height:1.5;color:#4a3732;margin-top:12px}
+.addr{display:flex;align-items:center;gap:16px;margin-top:20px;padding:16px;border-radius:18px;background:var(--bg-inset);border:1px solid var(--border)}
+.addr small{display:block;font-size:12px;color:var(--text-2)}.addr b{font-size:15px;line-height:1.3;display:block;margin-top:2px}
+.facts{display:grid;grid-template-columns:1fr 1fr;margin-top:20px;border-radius:18px;background:var(--bg-inset);border:1px solid var(--border);overflow:hidden}
+.facts div{padding:15px 16px;border-bottom:1px solid var(--border)}
+.facts div:nth-child(odd){border-right:1px solid var(--border)}.facts div:nth-last-child(-n+2){border-bottom:0}
+.facts small{display:block;font-size:12px;color:var(--text-2)}.facts b{display:block;font-size:17px;font-weight:700;margin-top:8px}
+.lst{margin-top:16px;border-top:1px solid var(--border)}
+.lst .row{display:flex;align-items:center;gap:12px;min-height:66px;padding:0 18px;border-bottom:1px solid var(--border);cursor:default}
+.lst .row:last-child{border-bottom:0}
+.box.lstbox{padding:0;overflow:hidden}
+.box .hd{padding:22px 18px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.box .hd h2{font-size:22px;line-height:1.15;font-weight:600;margin-top:8px}
+.box .hd .rt{font-size:15px;text-align:right;line-height:1.25;color:var(--ink)}
+.pn{width:22px;font-size:12.5px;color:var(--text-2);flex:none}
+.pr{margin-left:auto;font-weight:700;font-size:15px}.pr small{font-size:10.5px;font-weight:500;color:var(--text-2)}
+.lvl{display:flex;align-items:center;gap:20px;min-height:64px;padding:0 18px;border-top:1px solid var(--border)}
+.lvl .n{width:34px;font-size:21px;color:var(--wine);font-weight:400}
+.lvl b{display:block;font-size:16px;font-weight:700}.lvl small{font-size:11.5px;color:var(--text-2)}
+.lvl .mn{margin-left:auto;font-size:12px;color:var(--text-2)}
+.lvl.br{background:rgba(86,26,27,.08)}
+.lvl.cur{background:rgba(133,28,45,.1)}
+/* archive */
+.arch{list-style:none;margin:20px 0 0;padding:0}
+.arch li{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px solid var(--border);cursor:pointer}
+.arch .ic{width:34px;height:34px;border-radius:50%;background:var(--paper-300);display:grid;place-items:center;color:var(--burgundy);flex:none}
+.arch .m{flex:1;min-width:0}.arch b{display:block;font-size:14.5px;font-weight:600;text-transform:uppercase}
+.arch small{font-size:13px;color:var(--text-2);display:block;margin-top:3px}
+.res{margin-top:22px;padding:22px 18px 18px}
+.res h1{font-size:34px;font-weight:500;line-height:1.08;text-transform:uppercase;margin-top:12px}
+.res .d{color:var(--text-2);font-size:15px;margin-top:14px}
+.tbl{margin-top:22px;border-radius:22px;background:linear-gradient(#ecdec6,#e6d6bc);border:1px solid var(--border);overflow:hidden}
+.tbl .hd{padding:14px 14px 12px;display:flex;justify-content:space-between;align-items:flex-end}
+.tbl .hd h3{font-size:17px;font-weight:700;margin-top:4px}.tbl .hd .c{color:var(--text-2);font-size:15px}
+.tbl .cap{font-size:10.5px}
+.rr{display:flex;align-items:center;gap:14px;height:58px;padding:0 14px;border-top:1px solid var(--border)}
+.rr .pl{width:26px;text-align:center;font-weight:600;color:var(--text-2);font-size:16px;flex:none}
+.rr b{font-weight:600;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rr .pts{margin-left:auto;font-weight:700;font-size:13.5px;color:var(--success)}
+.rr.me{background:rgba(133,28,45,.1)}
+.more{display:block;width:100%;padding:16px;font-weight:600;font-size:14px;color:var(--wine);border-top:1px solid var(--border)}
+/* rating page */
+.seg2{display:inline-flex;gap:2px;padding:4px;border-radius:20px;background:linear-gradient(#fbf2de,#f6e8cd);border:1.5px solid rgba(86,26,27,.2);width:62%;margin-top:22px}
+.seg2 button{flex:1;padding:14px 4px;border-radius:16px;font-weight:700;font-size:15px;color:var(--text-2)}
+.seg2 button.on{background:linear-gradient(#651e20,#4d1618);color:#fff;box-shadow:0 5px 12px rgba(58,16,19,.3)}
+.per{display:flex;gap:2px;padding:4px;margin-top:14px;border-radius:20px;background:linear-gradient(#fbf2de,#f6e8cd);border:1.5px solid rgba(86,26,27,.2);overflow-x:auto;scrollbar-width:none}
+.per::-webkit-scrollbar{display:none}
+.per button{flex:1;min-width:fit-content;padding:10px 14px;border-radius:16px;text-align:left;font-weight:700;font-size:13.5px;color:var(--text-2);white-space:nowrap;line-height:1.25}
+.per button small{display:block;font-size:10.5px;font-weight:500;opacity:.85}
+.per button.on{background:linear-gradient(#651e20,#4d1618);color:#fff;box-shadow:0 5px 12px rgba(58,16,19,.3)}
+.mine{position:relative;margin-top:14px;padding:16px 14px 18px;border-radius:22px;color:#f6eedd;background:linear-gradient(150deg,#5a1a1e,#3a1013);overflow:hidden;box-shadow:0 14px 26px rgba(58,16,19,.28)}
+.mine::after{content:"";position:absolute;right:-60px;top:-30px;width:240px;height:240px;border-radius:50%;border:30px solid rgba(255,255,255,.05)}
+.mine .t1{display:flex;justify-content:space-between;font-size:12px;position:relative}.mine .t1 b{font-size:12.5px}.mine .t1 span{opacity:.75;font-size:11.5px}
+.mine .cols{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:14px;position:relative}
+.mine .cols>div{padding:0 12px;border-left:1px solid rgba(246,238,221,.22)}.mine .cols>div:first-child{padding-left:2px;border:0}
+.mine small{display:block;font-size:13.5px;opacity:.78}.mine .v{font-size:28px;font-weight:700;margin-top:6px;line-height:1}
+.season{margin-top:16px;padding:18px 12px 8px}
+.season .hd{display:flex;justify-content:space-between;align-items:flex-end;padding:0 6px 10px}
+.season .hd h2{font-size:22px;font-weight:700;margin-top:6px}.season .hd span{font-size:13px;color:var(--text-2);padding-bottom:4px}
+.pr-row{display:flex;align-items:center;gap:14px;padding:10px 14px 10px 12px;margin-bottom:8px;border-radius:20px;background:linear-gradient(#ece0c8,#e8dac0);border:1px solid var(--border-soft);cursor:pointer}
+.pr-row .pl{width:44px;height:44px;border-radius:50%;background:var(--paper-200);display:grid;place-items:center;font-weight:700;color:var(--text-2);flex:none;font-size:15px}
+.pr-row b{flex:1;font-size:15px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pr-row .v{text-align:right}.pr-row .v strong{display:block;font-size:22px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}.pr-row .v small{font-size:11px;color:var(--text-2)}
+.pr-row.me{outline:2px solid var(--wine)}
+/* history */
+.chron{margin-top:20px;padding:22px 20px;border-radius:24px;color:#f6eedd;background:linear-gradient(150deg,#5a1a1e,#3a1013);box-shadow:0 14px 28px rgba(58,16,19,.3);position:relative;overflow:hidden}
+.chron .cap{color:#d9ae5c}
+.chron .st{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px}
+.chron .st>div{padding:0 10px;border-left:1px solid rgba(246,238,221,.2)}.chron .st>div:first-child{padding-left:0;border:0}
+.chron .v{font-size:28px;font-weight:700;line-height:1}.chron small{display:block;font-size:12px;opacity:.75;margin-top:6px;line-height:1.25}
+.hrow{display:flex;align-items:center;gap:14px;padding:16px 16px;margin-top:10px;border-radius:20px;cursor:pointer}
+.hrow .m{flex:1;min-width:0}.hrow b{display:block;font-size:15px;text-transform:uppercase;font-weight:600}
+.hrow small{display:block;color:var(--text-2);font-size:13px;margin-top:4px}
+.hrow .r{text-align:right}.hrow .r b{text-transform:none;color:var(--success);font-size:16px}
+.empty{text-align:center;padding:60px 20px 20px}
+.empty .ei{width:76px;height:76px;margin:0 auto 18px;border-radius:50%;background:var(--paper-300);display:grid;place-items:center;color:var(--burgundy)}
+.empty h3{font-size:20px;font-weight:700}.empty p{color:var(--text-2);font-size:14px;margin-top:8px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.tile{padding:16px;border-radius:18px;background:var(--bg-inset);border:1px solid var(--border)}
+.tile.w{grid-column:span 2}.tile small{display:block;font-size:12px;color:var(--text-2)}.tile b{display:block;font-size:24px;margin-top:6px;font-weight:700}
+.tile.pos b{color:var(--success)}
+.kill{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--border)}
+.kill b{font-size:14.5px;font-weight:600}.kill span{margin-left:auto;font-size:13px;color:var(--text-2)}
+/* profile */
+.ph{display:flex;align-items:center;gap:14px;padding-top:22px}
+.ph h1{font-size:26px;font-weight:500}.ph small{color:var(--text-2);font-size:13px}
+.kc{position:relative;margin-top:22px;height:236px;border-radius:26px;background:radial-gradient(90% 90% at 80% 20%,#4e1a1f 0%,#2a0e12 55%,#1d0a0d 100%);box-shadow:0 16px 30px rgba(35,13,16,.35);color:#f6eedd;padding:20px 24px;display:flex;flex-direction:column;justify-content:flex-end}
+.kc::before{content:"";position:absolute;inset:11px;border:1px dashed rgba(246,238,221,.2);border-radius:18px}
+.kc .cap{font-size:10px;color:rgba(246,238,221,.6);letter-spacing:.14em;font-weight:500}
+.kc h3{font-size:22px;font-weight:500;line-height:1.2;margin-top:8px;position:relative}
+.kc .pg{margin-top:16px;height:8px;border-radius:99px;background:rgba(246,238,221,.15);overflow:hidden;position:relative}.kc .pg i{display:block;height:100%;background:linear-gradient(90deg,#d9ae5c,#f0d28a);border-radius:99px}
+.kc .stamps{position:absolute;right:26px;top:26px;display:flex;gap:6px}
+.menu{margin-top:22px;border-top:1px solid var(--border)}
+.menu button{display:flex;align-items:center;gap:12px;width:100%;height:58px;border-bottom:1px solid var(--border);font-weight:600;font-size:14.5px;color:var(--ink);text-align:left}
+.menu button svg:first-child{color:var(--burgundy)}.menu .g{flex:1}
+.sup{margin-top:24px;padding:18px 18px 18px;border-radius:22px;background:linear-gradient(#fbf2de,#f7e6c9);border:1px solid var(--border)}
+.sup h3{font-size:16.5px;font-weight:700}
+.sup button{margin-top:14px;padding:16px 12px;border-radius:12px;background:#4e1a1d;color:#f6eedd;font-size:14.5px}
+/* tabbar */
+.tabbar{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(410px,calc(100% - 20px));z-index:40;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:5px;border-radius:24px;background:rgba(248,233,210,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);box-shadow:0 10px 30px rgba(43,16,18,.2)}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 7px;border-radius:17px;font-size:12px;font-weight:500;color:var(--text-2)}
+.tabbar a.on{background:linear-gradient(#651e20,#4a1517);color:#fff;font-weight:600;box-shadow:0 5px 12px rgba(58,16,19,.35)}
+/* sheet */
+.sheet-wrap{position:fixed;inset:0;z-index:100;display:none}
+.sheet-wrap.on{display:block}
+.scrim{position:absolute;inset:0;background:rgba(25,10,12,.5);animation:fade .25s}
+.sheet{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;max-height:92vh;overflow-y:auto;background:var(--paper-100);border-radius:28px 28px 0 0;padding:20px 16px 28px;animation:up .3s cubic-bezier(.2,.8,.2,1);box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+@keyframes up{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
+@keyframes fade{from{opacity:0}}
+.sh-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.sh-h h2{font-size:22px;font-weight:700}
+.x{width:48px;height:48px;border-radius:50%;background:#e6d6c8;display:grid;place-items:center;flex:none;color:var(--ink)}
+.tbls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tbls button{display:flex;justify-content:space-between;align-items:center;padding:0 12px;height:52px;border-radius:12px;background:linear-gradient(#fbf0da,#f7e6c9);border:1.5px solid rgba(86,26,27,.15);font-weight:700;font-size:12.5px;text-align:left}
+.tbls button small{font-weight:500;color:var(--text-2);font-size:12px}
+.tbls button.on{background:#e8d7c8;border-color:var(--burgundy)}
+.tview{position:relative;margin-top:14px;height:300px;border-radius:20px;overflow:hidden;background:radial-gradient(90% 90% at 50% 40%,#58191f,#2e0f14 85%)}
+.tov{position:absolute;left:15%;width:70%;top:21%;height:46%;border-radius:999px;background:#7a1d24;border:7px solid #8a3a40;box-shadow:inset 0 0 0 3px #5a1519,0 6px 14px rgba(0,0,0,.35)}
+.tov::before{content:"";position:absolute;inset:9px;border-radius:999px;border:1.5px solid rgba(246,214,214,.35)}
+.tov::after{content:"";position:absolute;inset:15px;border-radius:999px;border:1px solid rgba(246,214,214,.22)}
+.tnum{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(35,13,16,.75);display:grid;place-items:center;color:#f6eedd;font-size:30px;font-weight:300;z-index:2}
+.seat{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;width:84px;z-index:3}
+.gear{position:relative;width:36px;height:36px;display:grid;place-items:center}
+.gear svg{position:absolute;inset:0}
+.gear span{position:relative;font-size:13px;font-weight:700;color:#8a6a58}
+.seat .av{width:34px;height:34px;font-size:12px;border:2px solid #f0e3cc}
+.seat .bg{position:absolute;right:20px;bottom:12px;min-width:15px;height:15px;border-radius:99px;background:#fbf3df;color:var(--ink);font-size:9.5px;font-weight:700;display:grid;place-items:center;border:1px solid #2e0f14;padding:0 3px}
+.seat .nm{font-size:11px;color:#f6eedd;margin-top:2px;max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.dealer{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:8px 22px 8px 8px;border-radius:14px;background:#fbf3df;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.dealer i{font-style:normal;width:32px;height:32px;border-radius:50%;background:#851c2d;color:#fff;font-size:11px;display:grid;place-items:center;font-weight:700}
+.dealer small{display:block;font-size:10.5px;font-weight:700;color:var(--wine);letter-spacing:.06em}.dealer b{font-size:12.5px;font-weight:600}
+/* forms */
+.fl{display:block;font-size:14px;color:var(--text-2);margin:14px 0 6px}
+.inp{position:relative;display:flex;align-items:center;gap:8px}
+.inp input,.inp textarea{flex:1;min-width:0;height:52px;padding:0 16px;border-radius:16px;border:1.5px solid rgba(86,26,27,.22);background:#f3e4c7;font-size:17px;outline:none}
+.inp textarea{height:110px;padding:14px 16px;resize:none;font-size:16px}
+.inp input:focus,.inp textarea:focus{border-color:var(--wine)}
+.inp input[readonly]{background:var(--paper-100);border-color:var(--border-soft);color:#8a7a72}
+.inp .cl{width:44px;height:44px;border-radius:50%;background:#e6d6c8;display:grid;place-items:center;flex:none;color:var(--text-2)}
+.hint{font-size:10.5px;color:var(--text-2);margin-top:5px}
+.photo{display:flex;align-items:center;gap:14px;padding:14px;border-radius:20px;background:linear-gradient(#fbf2de,#f6e8cd);border:1px solid var(--border);flex-wrap:wrap}
+.photo .btn-w{display:inline-flex;align-items:center;gap:8px;background:#fffaf0;border-radius:14px;padding:14px 16px;font-weight:600;font-size:13.5px;box-shadow:0 2px 8px rgba(43,16,18,.1)}
+.photo p{font-size:11.5px;color:var(--text-2);flex-basis:100%;margin-top:-2px;padding-left:76px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border-radius:14px;background:var(--burgundy);color:#fff;font-weight:600;font-size:16px;margin-top:16px}
+.sbtn.wine{background:#8d3640}.sbtn.soft{background:#c4857f;color:#fbe9e3}
+.lm{padding:18px;border-radius:22px;background:linear-gradient(#fbf2de,#f7e6c9);border:1px solid var(--border);margin-bottom:14px}
+.lm .h{display:flex;align-items:center;gap:14px}.lm .h svg{color:var(--wine);flex:none}
+.lm b{display:block;font-size:16px;font-weight:700}.lm small{display:block;font-size:12.5px;color:var(--text-2);margin-top:2px;line-height:1.3}
+.lm .inp{margin-top:14px}.lm .inp input{height:48px;font-size:16px}
+.foot{font-size:12.5px;color:var(--text-2);text-align:center;padding:4px 20px;line-height:1.4}
+.conf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.conf>div{padding:14px;border-radius:16px;background:var(--bg-inset);border:1px solid var(--border)}
+.conf small{display:block;font-size:12px;color:var(--text-2)}.conf b{display:block;font-size:16px;margin-top:6px}
+.nstat{display:flex;align-items:center;gap:14px;padding:16px;border-radius:14px;background:#e6e4d2;margin-bottom:12px}
+.nstat b{display:block;font-size:14.5px}.nstat small{font-size:12px;color:var(--text-2)}
+.nstat.un{background:#f1dcc4}
+.nstat svg{color:var(--success)}
+.ngh{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--text-2);text-transform:uppercase;margin:14px 2px 8px}
+.ni{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:14px;border-radius:16px;background:linear-gradient(#fbf2de,#f5e6ca);border:1px solid var(--border);margin-bottom:8px}
+.ni.rd{background:transparent;border-color:var(--border-soft);opacity:.75}
+.ni .ico{width:38px;height:38px;border-radius:50%;background:var(--wine);color:#fff;display:grid;place-items:center;flex:none}
+.ni.rd .ico{background:var(--paper-300);color:var(--burgundy)}
+.ni b{display:block;font-size:14.5px}.ni small{display:block;font-size:12.5px;color:var(--text-2);margin-top:3px;line-height:1.35}
+.vote{display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;border-radius:18px;border:1.5px solid var(--border);background:linear-gradient(#fbf2de,#f5e6ca);margin-bottom:10px;text-align:left;font-weight:600;font-size:15.5px}
+.vote.on{border-color:var(--burgundy);background:#e8d7c8}
+.vote .rad{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--paper-400)}.vote.on .rad{border:6px solid var(--burgundy)}
+.pubp{text-align:center;padding:4px 0 6px}.pubp .av{margin:14px auto 0}.pubp h3{font-size:26px;font-weight:600;margin-top:12px}
+.pubp .rt{display:inline-block;margin-top:8px;padding:8px 16px;border-radius:99px;background:var(--bg-inset);font-weight:600;font-size:14px}
+.seas div{display:flex;justify-content:space-between;padding:14px 4px;border-top:1px solid var(--border);font-size:15px}.seas div b{font-weight:700}
+.okc{text-align:center;padding:20px 10px}.okc .ck{width:68px;height:68px;margin:0 auto 14px;border-radius:50%;background:var(--success);color:#fff;display:grid;place-items:center}
+.okc h3{font-size:21px}.okc p{color:var(--text-2);font-size:14px;margin-top:6px}
+/* toast */
+.toast{position:fixed;left:50%;top:76px;transform:translate(-50%,-20px);z-index:200;background:#2b1012;color:#fffaf0;padding:13px 20px;border-radius:14px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;box-shadow:0 10px 24px rgba(0,0,0,.3);max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+/* splash */
+.splash{position:fixed;inset:0;z-index:300;background:#f3e9d4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .4s;color:var(--burgundy)}
+.splash.off{opacity:0;pointer-events:none}
+.splash b{letter-spacing:.2em;font-size:15px;font-weight:600}.splash span{font-size:14px;color:var(--text-3);margin-top:8px}
+/* welcome */
+.wel{padding:34px 20px 40px}
+.wel .lg{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--burgundy)}
+.wel h1{font-size:28px;font-weight:600;margin-top:26px;line-height:1.15}
+.age{display:flex;gap:12px;padding:14px;border-radius:16px;background:#efdcc0;border:1px solid var(--border);margin-top:18px;font-size:13px;color:var(--text-2);line-height:1.4}
+.age b{display:block;color:var(--ink);font-size:14px}.age svg{color:var(--wine);flex:none}
+.chk{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-size:14px;cursor:pointer;line-height:1.35}
+.chk input{display:none}.chk i{width:24px;height:24px;border-radius:8px;border:2px solid var(--paper-400);flex:none;display:grid;place-items:center;color:transparent;background:#f3e4c7}
+.chk input:checked+i{background:var(--burgundy);border-color:var(--burgundy);color:#fff}
+/* demo */
+.demo-b{position:fixed;top:63px;left:max(4px,calc(50% - 213px));z-index:60;opacity:.6;padding:3px 8px;border-radius:99px;background:rgba(43,16,18,.55);color:#fff;font-size:10px;font-weight:600;backdrop-filter:blur(6px);display:flex;gap:5px;align-items:center}
+.dm{margin-bottom:14px}.dm .l{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:8px}
+.dm .o{display:flex;gap:6px}.dm .o button{flex:1;padding:12px 6px;border-radius:12px;background:var(--bg-inset);font-weight:600;font-size:13.5px}
+.dm .o button.on{background:var(--burgundy);color:#fff}
+.skel{margin:40px 0;border:2px dashed var(--paper-400);border-radius:24px;padding:60px 20px;text-align:center;color:var(--text-2);font-size:15px}
+
+/* ===== адаптив ===== */
+.dmb{display:grid}.side{display:none}
+.tgrid .tcard{margin-bottom:14px}
+@media(hover:hover){
+ .tcard,.btn,.cta,.pr-row,.hrow,.arch li,.pill,.btn-light,.menu button,.sbtn,.ni,.vote{transition:transform .18s,box-shadow .18s,background-color .18s,filter .18s}
+ .tcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(43,16,18,.16)}
+ .btn:hover,.cta:hover,.sbtn:hover{filter:brightness(1.08)}.btn-light:hover,.pill:hover{transform:translateY(-1px)}
+ .pr-row:hover,.hrow:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(43,16,18,.12)}
+ .arch li:hover{background:rgba(86,26,27,.05)}.menu button:hover{background:rgba(86,26,27,.05)}
+ .seg button:not(.on):hover,.per button:not(.on):hover,.seg2 button:not(.on):hover{background:rgba(86,26,27,.07)}
+ .tabbar a:not(.on):hover{background:rgba(86,26,27,.07)}
+}
+@media(min-width:600px){
+ body{background:linear-gradient(180deg,#f6eedd,#f3e8d1);background-attachment:fixed}
+ .phone{max-width:720px;background:none;box-shadow:none!important}
+ .hdr{background:rgba(246,238,221,.85)}
+ .page{padding-left:28px;padding-right:28px}
+ .tabbar{width:min(560px,calc(100% - 20px))}
+ .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+ .tgrid .tcard{margin:0;display:flex;flex-direction:column}
+ .tgrid .th>div:first-child{width:auto!important;position:relative!important;height:170px;flex:none}
+ .tgrid .th .cover{position:absolute;inset:0}
+ .tgrid .cover .ct{font-size:38px;left:0;right:0;padding:0}
+ .tgrid .th .cnt{left:auto;right:14px;padding:7px 12px 6px}
+ .tgrid .tbody,.tgrid .th .tbody{display:flex;flex-direction:column;flex:1;padding:20px 16px 16px}
+ .tgrid .tbody .chip{align-self:flex-start}
+ .tgrid .th .tname{font-size:22px}.tgrid .tmeta{margin-bottom:16px}.tgrid .tbody .btn{margin-top:auto}
+ .tgrid .th .btn{height:52px}
+ .tgrid .mono{display:flex!important}
+ .sheet{max-width:520px}
+}
+@media(min-width:960px){
+ body{background:linear-gradient(180deg,#f8f0de,#f1e5cc);background-attachment:fixed}
+ .side{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:248px;z-index:35;background:var(--paper-200);border-right:1px solid var(--border);padding:26px 16px 20px}
+ .phone{width:auto;max-width:none;margin:0 0 0 248px}
+ body.nochrome .phone{margin:0 auto;max-width:720px}
+ .tabbar{display:none}
+ .hdr{height:64px;padding:0 40px;justify-content:flex-end}
+ .hdr .logo,.hdr .hav,.hdr .dmb{display:none}
+ .page{max-width:1120px;margin:0 auto;padding:12px 40px 60px}
+ .page.nar{max-width:760px}
+ .slogo{display:flex;align-items:center;gap:12px;padding:0 10px 26px;color:var(--burgundy)}.slogo b{font-size:15px;letter-spacing:.16em;font-weight:700}
+ .snav{display:flex;flex-direction:column;gap:6px}
+ .snav a{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:16px;font-weight:600;font-size:15.5px;color:var(--text-2);transition:background-color .15s,transform .15s}
+ .snav a:hover{background:rgba(86,26,27,.08);color:var(--ink)}
+ .snav a.on{background:var(--burgundy);color:#fff;box-shadow:0 6px 14px rgba(58,16,19,.3)}
+ .sfoot{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+ .sdemo{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;font-size:13.5px;font-weight:600;color:var(--text-2);background:rgba(86,26,27,.06);cursor:pointer}.sdemo:hover{background:rgba(86,26,27,.12)}
+ .smini{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:var(--paper-50);border:1px solid var(--border-soft);transition:box-shadow .15s}.smini:hover{box-shadow:var(--shadow)}
+ .smini b{display:block;font-size:14.5px}.smini small{color:var(--text-2);font-size:12.5px}
+ h1.t{font-size:38px}
+ .hgrid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,4fr);gap:36px;align-items:start}
+ .live{margin-top:10px;padding:30px 30px 22px;border-radius:28px}
+ .live h3{font-size:44px;max-width:380px}.live .open{font-size:15px;max-width:none}
+ .live-r .tm{font-size:50px}.live-r .bl{font-size:13px}.live-r .lv{font-size:13px}
+ .live-bot .pl{font-size:15px}.btn-light{padding:12px 18px;font-size:15px}
+ .hr .rcard{margin-top:10px}.hgrid .sec-h:first-child{margin-top:34px}
+ .tgrid{grid-template-columns:1fr 1fr;gap:20px}
+ .tops{margin-top:20px}
+ .hero{height:320px;padding:28px 32px 26px}.hero.sm{height:240px}.hero h1{font-size:44px}.hero.sm h1{font-size:38px}
+ .seg{max-width:660px}
+ .about{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:none;border:0;box-shadow:none;padding:0;align-items:start}
+ .about>div{background:linear-gradient(180deg,#fbf2de,#f7e9d0);border:1px solid rgba(86,26,27,.13);border-radius:24px;box-shadow:var(--shadow);padding:28px}
+ .about .ar{position:sticky;top:84px}.about .facts{margin-top:0}
+ .lstbox{max-width:760px}
+ .rgrid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:36px;align-items:start}
+ .rl{position:sticky;top:80px}.seg2{width:70%}
+ .rr2 .season{margin-top:26px}
+ .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+ .pgrid .kc{margin-top:22px}
+ .sheet-wrap.on{display:flex;align-items:center;justify-content:center;padding:24px}
+ .sheet{position:relative;left:auto;bottom:auto;transform:none;max-width:520px;max-height:88vh;border-radius:24px;padding:24px 24px 28px;animation:pop .22s cubic-bezier(.2,.8,.2,1)}
+ .sheet.wide{max-width:760px}
+ @keyframes pop{from{opacity:0;transform:scale(.95) translateY(8px)}}
+ .sheet.wide #tb{display:grid;grid-template-columns:240px minmax(0,1fr);gap:0 24px;align-items:start}
+ .sheet.wide .tbls{grid-template-columns:1fr;grid-column:1;grid-row:1/span 3}
+ .sheet.wide #tb>:not(.tbls){grid-column:2}.sheet.wide .tview{margin-top:0}
+ .toast{left:calc(50% + 124px)}
+}
+@media(min-width:1280px){.tgrid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<aside class="side" id="side"></aside>
+<div class="phone" id="phone">
+  <header class="hdr" id="hdr"></header>
+  <main id="app"></main>
+  <nav class="tabbar" id="tabbar"></nav>
+</div>
+<div class="sheet-wrap" id="sheetW"><div class="scrim" data-a="closeSheet"></div><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<div class="splash" id="splash"></div>
+<script>
+'use strict';
+const BRAND = 'POKER CLUB';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+/* ================= ДАННЫЕ ================= */
+const TOURS = [
+  {id:'t1', name:'MIDNIGHT ULTRA BOUNTY', cover:'BOUNTY NIGHT', kind:'bounty', date:'9 октября в 19:00', reg:84, cap:90, st:'closed',
+   desc:'Ночной турнир с повышенными наградами за каждого выбитого соперника. Каждый нокаут приносит ULTRA-баунти, а лучшие охотники вечера получают призы от клуба. Приходите за азартом и острыми раздачами.',
+   meta:'Bounty · 150 рейтинговых очков', fee:'1 500 ₽', stack:'40 000', re:'1 500 ₽', addon:'1 500 ₽',
+   fmt:'Нокаут-турнир с прогрессивным баунти: за каждого выбитого игрока вы забираете часть его награды. Один вход, один re-entry до конца поздней регистрации, add-on на перерыве.', hue:350},
+  {id:'t2', name:'RIVERSIDE DAY', cover:'CLUB NIGHT', kind:'club', date:'10 октября в 17:00', reg:37, cap:90, st:'open',
+   desc:'Тематический вечер у реки: лёгкие закуски, живая музыка и покер в уютной атмосфере. Максимум два стола в финале, глубокие стеки и неспешный темп для тех, кто любит думать.',
+   meta:'Классический формат', fee:'1 000 ₽', stack:'30 000', re:'1 000 ₽', addon:'1 000 ₽',
+   fmt:'Классический турнир без нокаутов. Вечер с тематическим оформлением, живой музыкой и закусками от клуба. Играем глубоко, уровни по 33 минуты.', hue:20},
+  {id:'t3', name:'BOUNTY CASCADE', cover:'BOUNTY NIGHT', kind:'bounty', date:'11 октября в 17:00', reg:10, cap:90, st:'open',
+   desc:'Каскадный формат нокаутов: до конца поздней регистрации за голову назначается один бонус, после неё награда за каждого выбитого удваивается. Чем позже, тем щедрее охота.',
+   meta:'Bounty · 50 рейтинговых очков', fee:'1 000 ₽', stack:'30 000', re:'1 000 ₽', addon:'—',
+   fmt:'Каскадный баунти: награда за голову растёт по ходу турнира. До конца поздней регистрации — один бонус за выбитого, затем два.', hue:340},
+  {id:'t4', name:'FREEZEOUT CLASSIC', cover:'CLUB NIGHT', kind:'club', date:'12 октября в 19:00', reg:0, cap:90, st:'soon', opens:'Откроется 10 октября в 17:00',
+   desc:'Строгий фризаут: один вход и один re-entry для каждого игрока. Если вылетели, можно вернуться в игру ещё один раз до окончания поздней регистрации. Без add-on и сюрпризов.',
+   meta:'Классический формат', fee:'1 000 ₽', stack:'30 000', re:'1 000 ₽', addon:'—',
+   fmt:'Классический фризаут с одним re-entry. Структура на 30 уровней, три перерыва, финальный стол с трансляцией результатов на экране клуба.', hue:10},
+  {id:'t5', name:'SILVER TURBO', cover:'CLUB NIGHT', kind:'club', date:'14 октября в 19:00', reg:0, cap:60, st:'soon', opens:'Откроется 12 октября в 12:00',
+   desc:'Быстрый турбо-формат на один вечер: короткие уровни, растущие блайнды и стремительный финал. Для тех, кто любит темп и не любит ждать.',
+   meta:'Классический формат', fee:'700 ₽', stack:'20 000', re:'—', addon:'—',
+   fmt:'Турбо-турнир: уровни по 15 минут, один вход без re-entry. Финиш за три-четыре часа.', hue:30}
+];
+const ARCH = [
+  ['FREEROLL TOURNAMENT','8 октября 2026 г.',120],['GIFT DAY','7 октября 2026 г.',41],['WOMEN’S NIGHT','6 октября 2026 г.',79],
+  ['GRAND FREEZEOUT','5 октября 2026 г.',88],['FREEROLL TOURNAMENT','4 октября 2026 г.',108],['OPEN SEASON VOL.2','3 октября 2026 г.',57],
+  ['ONE-SHOT TOURNAMENT','2 октября 2026 г.',70],['WOMEN’S NIGHT','1 октября 2026 г.',72],['BOUNTY HUNTERS','30 сентября 2026 г.',94],
+  ['SUNDAY MAIN EVENT','29 сентября 2026 г.',112],['TURBO TUESDAY','28 сентября 2026 г.',48],['CLUB CHAMPIONSHIP','26 сентября 2026 г.',130],
+  ['HIGH CARD DAY','25 сентября 2026 г.',63],['OCTOBER WARM-UP','24 сентября 2026 г.',55],['LADIES & ACES','22 сентября 2026 г.',66]
+].map((a,i)=>({id:'a'+(i+1),name:a[0],date:a[1],n:a[2]}));
+const NAMES = ['Ace_88','RiverQueen','Kot_Shrodingera','NutFlush','Bluffer_X','Dealer_Dan','PocketRockets','TiltMaster','Mr_Fold','Lady_Luck','SharkFin','ZeroCool','AllInAnna','Fold_Fox','Gutshot','Nine_Outs','Pot_Odds','Slow_Roll','Big_Slick','Tank_Tom','Wild_Card','Cold_Call','Rail_Bird','Check_Raise','Muck_Hand','Kicker_K','Short_Stack','Chip_Leader','Ice_Heart','Brick_Wall','Maverick7','Dusty_Boots','Velvet_Joker','Night_Owl','Poker_Face','Lucky_Seven','Count_Cards','Red_Flush','Black_Jack_B','Orbit_Olya'];
+const SEATED = {4:{2:'Ace_88',5:'RiverQueen',7:'NutFlush',9:'Dealer_Dan'},6:{1:'Fold_Fox',2:'Kot_Shrodingera',4:'Gutshot',5:'Big_Slick',6:'Tank_Tom',8:'Wild_Card'}};
+const TCNT = [0,0,0,4,0,6,0,0,0];
+const FEED = [['Big_Slick','Gutshot','01:27'],['Big_Slick','Wild_Card','01:27'],['Ace_88','Slow_Roll','01:22'],['Big_Slick','Tank_Tom','01:20'],['Big_Slick','Fold_Fox','01:11'],['Ace_88','Nine_Outs','01:08']];
+const LEVELS = (()=>{
+  const a=[[100,100],[100,200],[200,400],[300,600],'b',[400,800],[500,1000],[600,1200],[800,1600],[1000,2000],'b',[1500,3000],[2000,4000],[2500,5000],[3000,6000],[4000,8000],'b',[5000,10000],[6000,12000],[8000,16000],[10000,20000],[15000,30000],[20000,40000],[25000,50000],[30000,60000],[40000,80000],[50000,100000],[60000,120000],[80000,160000],[100000,200000],[150000,300000]];
+  let n=0;const mins=[33,33,32,33,0,33,32,33,33,33,0,30,30,30,30,30,0,30,30,30,25,25,25,25,25,25,25,25,25,25,25];
+  return a.map((x,i)=>x==='b'?{br:1,min:10}:{n:++n,sb:x[0],bb:x[1],ante:x[1],min:mins[i]});
+})();
+const PLAYERS = NAMES.map((n,i)=>({name:n,pts:Math.round(8830*Math.pow(.93,i)+ (i*37%50)),bty:Math.max(1,24-Math.round(i*.9)-(i%3)),vis:20-Math.floor(i/2)}));
+const PLAYERS_B = PLAYERS.slice().sort((a,b)=>b.bty-a.bty);
+const SEASONS = [['Октябрь 2026','8 830'],['Сентябрь 2026','7 215'],['Август 2026','5 980'],['Июль 2026','3 410']];
+const HIST = [
+  {id:'h1',name:'FREEROLL TOURNAMENT',date:'8 октября 2026 г.',place:7,pts:320,entries:1,addon:0,dur:'3 ч 12 мин',n:120,kills:['Gutshot','Nine_Outs']},
+  {id:'h2',name:'GRAND FREEZEOUT',date:'5 октября 2026 г.',place:3,pts:840,entries:2,addon:1,dur:'5 ч 40 мин',n:88,kills:['Tank_Tom','Slow_Roll','Mr_Fold']},
+  {id:'h3',name:'BOUNTY HUNTERS',date:'30 сентября 2026 г.',place:18,pts:110,entries:1,addon:0,dur:'2 ч 05 мин',n:94,kills:[]},
+  {id:'h4',name:'SUNDAY MAIN EVENT',date:'29 сентября 2026 г.',place:9,pts:260,entries:1,addon:1,dur:'4 ч 22 мин',n:112,kills:['Pot_Odds']},
+  {id:'h5',name:'CLUB CHAMPIONSHIP',date:'26 сентября 2026 г.',place:2,pts:1150,entries:1,addon:0,dur:'6 ч 18 мин',n:130,kills:['Ice_Heart','Brick_Wall','Cold_Call','Rail_Bird']},
+  {id:'h6',name:'TURBO TUESDAY',date:'28 сентября 2026 г.',place:21,pts:40,entries:1,addon:0,dur:'1 ч 30 мин',n:48,kills:[]}
+];
+const DEALERS = ['Марина','Артём','Илья'];
+const NOTIFS = [
+  {id:'n1',ic:'cal',t:'Регистрация открыта: BOUNTY CASCADE',s:'Запись на турнир 11 октября уже доступна.',go:'#/tournaments/t3/about'},
+  {id:'n2',ic:'star',t:'Оценка вечера',s:'Выберите лучшего дилера вчерашнего турнира.',vote:1}
+];
+const NEWS = [
+  {d:'2 СЕНТЯБРЯ',t:'Добро пожаловать в '+BRAND+' 👋',p:'Здесь твой рейтинг, запись на турниры, расписание и новости клуба. Всё, что нужно для игры — в одном месте.',v:0},
+  {d:'28 СЕНТЯБРЯ',t:'Новая структура блайндов',p:'Мы пересобрали уровни: теперь турниры идут плавнее, а финальные столы наступают быстрее. Подробности — в карточке каждого турнира.',v:1}
+];
+
+/* ================= СОСТОЯНИЕ ================= */
+const KEY='pc_proto_v1';
+const DEF=()=>({reg:{},profile:{fio:'Алексей Громов',nick:'Alex_Ace',tg:'@alex_ace',phone:'8 (900) 123-45-67',email:'alex@example.com',emailOk:false,tgOk:false},
+  read:{},voted:false,demo:{live:'pause',history:true,notifs:true},rt:'rating',rp:'oct',tbl:1,since:'октября 2026 г.'});
+let S=DEF();
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r){S=Object.assign(DEF(),r);S.demo=Object.assign(DEF().demo,r.demo||{});S.profile=Object.assign(DEF().profile,r.profile||{});}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const regN=t=>t.reg+(S.reg[t.id]?1:0);
+const tById=id=>TOURS.find(t=>t.id===id);
+
+/* ================= ИКОНКИ ================= */
+const P={
+ home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/>',
+ cal:'<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/>',
+ trophy:'<path d="M8 4h8v6a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5v1.5A3 3 0 0 0 8 10.5M16 6h3v1.5a3 3 0 0 1-3 3"/><path d="M12 14v3.5M8.5 20h7M9.5 17.5h5V20h-5z"/>',
+ hist:'<path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5M12 8v4.5l3 2"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/>',
+ bell:'<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15L6 16.5Z"/><path d="M10 21h4"/>',
+ users:'<circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20c.6-3.5 3.2-5.2 6.5-5.2s5.9 1.7 6.5 5.2"/><path d="M16 5.3a3.4 3.4 0 0 1 0 6.4M18 15c2 .7 3.2 2.3 3.5 5"/>',
+ chev:'<path d="m9 5 7 7-7 7"/>',chevl:'<path d="m15 5-7 7 7 7"/>',
+ arch:'<rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V9M9.5 13h5"/>',
+ book:'<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.500-.5 6.500 0 8.500 1.500 2-1.500 5-2 8.500-1.500V5C17 4.500 14 5 12 6.500Z"/><path d="M12 6.500v13"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.500V12l3 2"/>',
+ pin:'<path d="M12 21s-6.500-5.800-6.500-11a6.500 6.500 0 0 1 13 0c0 5.200-6.500 11-6.500 11Z"/><circle cx="12" cy="10" r="2.300"/>',
+ check:'<path d="m4.500 12.500 5 5 10-11"/>',x:'<path d="M6 6l12 12M18 6 6 18"/>',
+ key:'<circle cx="8" cy="15.500" r="4.500"/><path d="m11.300 12.200 8.200-8.200M16 7.500l2.500 2.500M14 9.500l2 2"/>',
+ mail:'<rect x="3" y="5.500" width="18" height="13" rx="2.500"/><path d="m3.500 7.500 8.500 6 8.500-6"/>',
+ send:'<path d="M21 3 3 10.500l6.500 2.500L12 20l3-5.500L21 3Z"/><path d="m9.500 13 11-10"/>',
+ shield:'<path d="M12 3 4.500 6v5.500c0 4.500 3 8 7.500 9.500 4.500-1.500 7.500-5 7.500-9.500V6L12 3Z"/><path d="m8.800 12 2.400 2.400 4-4.600"/>',
+ trash:'<path d="M4.500 7h15M9.500 7V4.500h5V7M6.500 7l.8 12.500h9.400L17.500 7M10 11v5M14 11v5"/>',
+ cam:'<path d="M4 8h3.500L9 5.500h6L16.500 8H20v11H4V8Z"/><circle cx="12" cy="13" r="3.500"/>',
+ arr:'<path d="M4 12h16M14 6l6 6-6 6"/>',
+ star:'<path d="m12 3.500 2.600 5.400 5.900.8-4.300 4.100 1 5.800L12 16.800l-5.200 2.800 1-5.800-4.300-4.100 5.900-.8L12 3.500Z"/>',
+ sl:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>',
+ gift:'<rect x="3.500" y="9" width="17" height="11" rx="2"/><path d="M12 9v11M3.500 13h17M12 9c-3 0-4.500-1-4.500-2.500S9 4.500 10.500 5.500 12 9 12 9Zm0 0c3 0 4.500-1 4.500-2.500S15 4.500 13.500 5.500 12 9 12 9Z"/>'
+};
+const ic=(n,s=22,sw=1.7)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const trophy=(c,s=22)=>`<span style="color:${c};display:inline-flex">${ic('trophy',s,1.8)}</span>`;
+const logoSvg=(s=34,col='currentColor')=>`<svg width="${s}" height="${s}" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 2 46 24 24 46 2 24Z" stroke="${col}" stroke-width="1.6"/><path d="M24 7.500 40.500 24 24 40.500 7.500 24Z" stroke="${col}" stroke-width=".8" opacity=".55"/><text x="24" y="31" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="21" font-weight="500" fill="${col}">P</text></svg>`;
+
+/* аватары */
+const AVC=['#6b5b95','#8c2f39','#7a5c3e','#3f6b5a','#5b6f8c','#a0522d','#6a4c6e','#4d6b3a','#8a6a2e','#4a5d78'];
+const hsh=s=>{let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))>>>0;return h};
+const av=(name,sz=36)=>{const nm=String(name);const p=nm.split(/[\s_]+/).filter(Boolean);const ini=(p.length>1?p[0][0]+p[1][0]:nm[0]).toUpperCase();
+  return `<span class="av" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.38)}px;background:linear-gradient(135deg,${AVC[hsh(nm)%AVC.length]},${AVC[(hsh(nm)+3)%AVC.length]}cc)">${esc(ini)}</span>`};
+const meAv=(sz)=>`<span class="av me" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.4)}px">${esc(S.profile.nick[0].toUpperCase())}</span>`;
+const avMe=sz=>`<span class="av" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz*.4)}px;background:linear-gradient(135deg,#8b5a3c,#4b3326)">${esc(S.profile.nick[0].toUpperCase())}</span>`;
+
+/* ================= ОБЛОЖКИ ================= */
+const suitPat=`<svg width="100%" height="100%" style="position:absolute;inset:0;opacity:.07" aria-hidden="true"><defs><pattern id="sp" width="46" height="46" patternUnits="userSpaceOnUse"><text x="4" y="22" font-size="18" fill="#fff">♠</text><text x="26" y="42" font-size="18" fill="#fff">♦</text></pattern></defs><rect width="100%" height="100%" fill="url(#sp)"/></svg>`;
+function coverBg(t){const h=t.hue||350;
+  return `background:radial-gradient(60% 80% at 80% 100%,hsla(${h},60%,30%,.75),transparent 70%),radial-gradient(50% 60% at 20% 0%,hsla(${h+10},40%,22%,.8),transparent 70%),linear-gradient(160deg,#3a1013,#1d0b0e)`;}
+function cover(t,cls=''){
+  return `<div class="cover ${cls}" style="${coverBg(t)}">${suitPat}<div class="ct">${t.cover.replace(' ','<br>')}</div><div class="mono" style="${cls==='wideC'?'':'display:none'}">${logoSvg(40,'#f6eedd')}<span>${BRAND}</span></div></div>`;
+}
+function heroBg(t){const h=t.hue||350;
+  return `background:radial-gradient(40% 50% at 78% 38%,hsla(${h+20},50%,55%,.35),transparent 70%),radial-gradient(35% 45% at 92% 70%,hsla(30,45%,60%,.28),transparent 70%),radial-gradient(60% 60% at 30% 80%,hsla(${h},55%,28%,.6),transparent 70%),linear-gradient(170deg,#241013 0%,#120708 100%)`;}
+function hero(t,sm){
+  const ek=t.kind==='bounty'?'BOUNTY EVENT':'CLUB EVENT';
+  return `<div class="hero ${sm?'sm':''}" style="${heroBg(t)}">${suitPat}
+   <div class="cnt" style="top:14px;right:14px"><b>${regN(t)}/${t.cap}</b><small>записей</small></div>
+   <div class="ek">${ek}</div><h1>${esc(t.name)}</h1><div class="dp">${esc(t.date)}</div></div>`;
+}
+
+/* ================= ПОМОЩНИКИ ТУРНИРОВ ================= */
+function statusOf(t){
+  if(S.reg[t.id])return{chip:'Вы записаны',cc:'reg',btn:`<button class="btn line" data-a="open" data-h="#/tournaments/${t.id}/about">Вы записаны ${ic('check',18,2.4)}</button>`};
+  if(t.st==='open')return{chip:'Регистрация открыта',cc:'open',btn:`<button class="btn" data-a="reg" data-id="${t.id}">Записаться ${ic('arr',20,1.8)}</button>`};
+  if(t.st==='soon')return{chip:t.opens,cc:'',btn:`<button class="btn dis" disabled>${esc(t.opens)}</button>`};
+  return{chip:'Регистрация завершена',cc:'',btn:`<button class="btn dis" disabled>Регистрация завершена</button>`};
+}
+function tcard(t,wide){
+  const s=statusOf(t);
+  return `<article class="card tcard ${wide?'tw':'th'}" data-a="open" data-h="#/tournaments/${t.id}/about">
+   <div style="${wide?'':'width:38%;flex:none;position:relative'}">${wide?'':''}
+   ${cover(t,wide?'wideC':'')}
+   <div class="cnt"><b>${regN(t)}/${t.cap}</b><small>записей</small></div></div>
+   <div class="tbody"><span class="chip ${s.cc}">${esc(s.chip)}</span>
+   <div class="tname">${esc(t.name)}</div><div class="tdate">${esc(t.date)}</div>
+   <p class="tdesc">${esc(t.desc)}</p><div class="tmeta">${esc(t.meta)}</div>${s.btn}</div></article>`;
+}
+function resultsRows(seed,n,withMe){
+  const base=PLAYERS.slice();let rot=hsh(seed)%10;const arr=base.slice(rot).concat(base.slice(0,rot));
+  let h='';const top=6650-(hsh(seed)%900);
+  for(let i=0;i<n;i++){
+    const p=arr[i%arr.length];const pts=Math.max(40,Math.round(top*Math.pow(.62,i/1.4)+(i<10?0:900/(i+1))));
+    const pl=i<3?trophy([ 'var(--gold)','var(--silver)','var(--bronze)'][i],22):i+1;
+    const me=withMe&&i===withMe-1;
+    h+=`<div class="rr ${me?'me':''}"><span class="pl">${pl}</span>${me?avMe(36):av(p.name,36)}<b>${esc(me?S.profile.nick+' · вы':p.name)}</b><span class="pts">+${pts}</span></div>`;
+  }return h;
+}
+
+/* ================= ВИДЫ ================= */
+const V={};
+function liveCard(){
+  const m=S.demo.live;
+  if(m==='none')return `<div class="live idle"><div class="live-top"><div><h3 style="font-size:26px">Сейчас турнира нет</h3><div class="open">Ближайший — ${esc(TOURS[1].name)}</div></div></div>
+   <div class="live-bot"><span class="pl">${ic('cal',20)} ${esc(TOURS[1].date)}</span><button class="btn-light" data-a="open" data-h="#/tournaments/t2/about">Открыть ${ic('chev',16,2.2)}</button></div></div>`;
+  const lv=LEVELS.filter(l=>l.n);const L=lv[24];
+  return `<div class="live"><div class="live-top"><div><h3>${esc(TOURS[0].name)}</h3><div class="open">Открытый просмотр турнира</div></div>
+   <div class="live-r"><div class="lv">${m==='pause'?'Пауза':'Уровень '+L.n}</div><div class="tm" id="liveTm">${m==='pause'?'05:57':'17:42'}</div><div class="bl">${m==='pause'?'40 000 / 80 000 · ante 80 000':fmt(L.sb)+' / '+fmt(L.bb)+' · ante '+fmt(L.ante)}</div></div></div>
+   <div class="live-bot"><span class="pl">${ic('users',20)} 10 в игре</span><button class="btn-light" data-a="tables">Все столы ${ic('chev',16,2.2)}</button></div></div>`;
+}
+function feedList(tableIdx){
+  let f=FEED;if(tableIdx===6)f=FEED.slice(0,5);else if(tableIdx===4)f=FEED.slice(2);else if(tableIdx!==0&&tableIdx!==null)f=[];
+  if(!f.length)return `<p class="sub" style="padding:10px 4px 6px">За этим столом пока нет выбитых игроков.</p>`;
+  return `<ul class="tl">${f.map(e=>`<li><span class="dot"></span><span class="tx">${esc(e[0])} выбил ${esc(e[1])}</span><span class="tt">${e[2]}</span></li>`).join('')}</ul>`;
+}
+V.home=()=>{
+  const regs=TOURS.filter(t=>S.reg[t.id]);
+  const rc=regs.length?`<div class="regcard"><span class="ok">${ic('check',20,2.4)}</span><div class="m"><b>Вы зарегистрированы</b><small>${esc(regs[0].name)} · ${esc(regs[0].date)}</small></div><button class="btn-sm" data-a="open" data-h="#/tournaments/${regs[0].id}/about">Открыть</button></div>`:'';
+  const hasH=S.demo.history;
+  const news=NEWS.map(n=>`<article class="card news"><div class="img">${newsImg(n.v)}</div><div class="bd"><div class="dt">${n.d}</div><h3>${esc(n.t)}</h3><p>${esc(n.p)}</p></div></article>`).join('');
+  return `<div class="page"><div class="hgrid"><div class="hl">${rc}${liveCard()}
+   ${S.demo.live!=='none'?`<h2 class="s sec-h">Bounty за столом</h2>${feedList(0)}`:''}
+   </div><div class="hr"><section class="rcard"><svg class="deco" viewBox="0 0 360 240" preserveAspectRatio="xMaxYMax slice" fill="none"><path d="M-10 70C60 40 90 110 150 90S250 20 300 50 370 70 380 60" stroke="#8a3a3f" stroke-width="10" opacity=".45"/><path d="M-10 70C60 40 90 110 150 90S250 20 300 50 370 70 380 60" stroke="#c7777c" stroke-width="1" opacity=".5" stroke-dasharray="2 5"/><path d="M180 200C215 185 235 190 262 160s48 6 66-34 22-8 34-30" stroke="#f6eedd" stroke-width="2.4" stroke-linecap="round"/><path d="M180 200C215 185 235 190 262 160s48 6 66-34 22-8 34-30V240H180Z" fill="url(#gg)" opacity=".5"/><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f6eedd" stop-opacity=".25"/><stop offset="1" stop-color="#f6eedd" stop-opacity="0"/></linearGradient></defs><circle cx="362" cy="96" r="4" fill="#f6eedd"/></svg>
+    <div class="l1">Рейтинг растёт вместе с вашей историей</div><div class="big">${hasH?'1 240':'0'}</div><div class="l2">рейтинговых очков</div>
+    <div class="l3">${hasH?'12 клубных визитов · 9 bounty':'0 клубных визитов · 0 bounty'}<br>за всё время.</div><a href="#/rating">Смотреть рейтинг ${ic('arr',20)}</a></section>
+   <button class="cta" data-a="open" data-h="#/tournaments/t2/about">${ic('cal',26,1.6)}<span class="g">Открыть турнир</span>${ic('arr',24)}</button>
+   <h2 class="s sec-h" style="margin-top:34px">Из клуба</h2>${news}</div></div></div>`;
+};
+function newsImg(v){
+  if(v===0)return `<svg viewBox="0 0 380 210" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="n0" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b98a5a"/><stop offset="1" stop-color="#6c3f27"/></linearGradient></defs><rect width="380" height="210" fill="url(#n0)"/><circle cx="330" cy="150" r="26" fill="#c9d36a"/><path d="M0 170 120 120 140 210H0Z" fill="#e8dcc2"/><rect x="20" y="40" width="46" height="110" rx="14" fill="#5a1a1e"/><g transform="rotate(-6 200 100)"><rect x="140" y="20" width="110" height="190" rx="16" fill="#1b0f10"/><rect x="146" y="28" width="98" height="174" rx="11" fill="#f1e4cc"/><rect x="154" y="62" width="82" height="70" rx="10" fill="#4e1a1f"/><text x="195" y="92" text-anchor="middle" font-size="9" fill="#f6eedd">рейтинг растёт</text><text x="195" y="116" text-anchor="middle" font-size="22" font-weight="700" fill="#fff">1000</text></g></svg>`;
+  return `<svg viewBox="0 0 380 210" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="n1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a1519"/><stop offset="1" stop-color="#190a0c"/></linearGradient></defs><rect width="380" height="210" fill="url(#n1)"/><ellipse cx="190" cy="170" rx="210" ry="70" fill="#6a1f23"/><g fill="#f6eedd"><rect x="120" y="60" width="52" height="74" rx="7" transform="rotate(-14 146 97)"/><rect x="200" y="56" width="52" height="74" rx="7" transform="rotate(10 226 93)"/></g><text x="124" y="106" font-size="30" fill="#851c2d" transform="rotate(-14 146 97)">♠</text><text x="206" y="102" font-size="30" fill="#851c2d" transform="rotate(10 226 93)">♦</text><circle cx="90" cy="150" r="14" fill="#d9ae5c"/><circle cx="300" cy="150" r="14" fill="#b394cc"/></svg>`;
+}
+V.tournaments=()=>{
+  const list=TOURS.map((t,i)=>tcard(t,i===0)).join('');
+  return `<div class="page"><div class="tops"><h1 class="t">Турниры</h1><button class="pill" data-a="open" data-h="#/tournaments/archive">${ic('arch',20)} Прошедшие турниры</button></div><div class="tgrid">${list}</div></div>`;
+};
+V.archive=()=>`<div class="page nar"><a class="back" href="#/tournaments">${ic('chevl',18,2)}<u>К турнирам</u></a>
+  <div style="display:flex;justify-content:space-between;align-items:center"><h1 class="t">Прошедшие турниры</h1><span style="color:var(--burgundy)">${ic('arch',30,1.6)}</span></div>
+  <p class="sub" style="margin-top:12px">Все завершённые турниры клуба.</p>
+  <ul class="arch">${ARCH.map(a=>`<li data-a="open" data-h="#/tournaments/archive/${a.id}"><span class="ic">${ic('trophy',20,1.7)}</span><div class="m"><b>${esc(a.name)}</b><small>${a.date} · ${a.n} игроков</small></div>${ic('chev',20,2)}</li>`).join('')}</ul></div>`;
+V.archiveItem=id=>{
+  const a=ARCH.find(x=>x.id===id)||ARCH[0];
+  return `<div class="page nar"><a class="back" href="#/tournaments/archive">${ic('chevl',18,2)}<u>В архив</u></a>
+  <section class="card res"><div class="cap" style="color:var(--burgundy);letter-spacing:.14em">ИТОГИ ТУРНИРА</div><h1>${esc(a.name)}</h1><div class="d">${a.date}</div>
+  <div class="tbl"><div class="hd"><div><div class="cap">Итоговая таблица</div><h3>Все участники</h3></div><span class="c">${a.n}</span></div>${resultsRows(a.id,30,0)}</div></section></div>`;
+};
+V.tournament=(id,tab)=>{
+  const t=tById(id);if(!t)return V.tournaments();
+  const s=statusOf(t);const sm=tab!=='about';
+  const tabs=[['about','book','О турнире'],['players','users','Игроки · '+regN(t)],['structure','clock','Блайнды / ante']];
+  let body='';
+  if(tab==='about'){
+    body=`<section class="card box about"><div class="al"><div class="cap">Формат</div><p class="fmt">${esc(t.fmt)}</p>
+    <div class="addr">${ic('pin',26,1.7)}<div><small>${BRAND}</small><b>Санкт-Петербург, ул. Примерная, 1</b></div></div>
+    </div><div class="ar"><div class="facts"><div><small>Орг. взнос</small><b>${t.fee}</b></div><div><small>Стартовый стек</small><b>${t.stack}</b></div><div><small>Re-entry</small><b>${t.re}</b></div><div><small>Add-on</small><b>${t.addon}</b></div></div>
+    ${S.reg[t.id]?`<button class="btn line" data-a="unreg" data-id="${t.id}">Отменить запись</button>`:t.st==='open'?`<button class="btn" style="height:56px" data-a="reg" data-id="${t.id}">Записаться ${ic('arr',20,1.8)}</button>`:`<button class="btn dis" disabled style="height:56px">${esc(s.chip)}</button>`}</div></section>`;
+  }else if(tab==='players'){
+    const n=regN(t);const lst=[];for(let i=0;i<Math.min(n,40);i++){const p=PLAYERS[(i*7+hsh(t.id))%PLAYERS.length];lst.push(p);}
+    const seen={};const u=lst.filter(p=>!seen[p.name]&&(seen[p.name]=1));
+    let rows=u.map((p,i)=>`<div class="row"><span class="pn">${i+1}</span>${av(p.name,34)}<b style="font-size:14px;font-weight:600">${esc(p.name)}</b><span class="pr">${fmt(p.pts)} <small>оч.</small></span></div>`).join('');
+    if(S.reg[t.id])rows=`<div class="row" style="background:rgba(133,28,45,.08)"><span class="pn">★</span>${avMe(34)}<b style="font-size:14px">${esc(S.profile.nick)} · вы</b><span class="pr">1 240 <small>оч.</small></span></div>`+rows;
+    body=`<section class="card box lstbox"><div class="hd"><div><div class="cap">Список</div><h2>Зарегистрированные<br>игроки</h2></div><div class="rt">${n} из ${t.cap}<br>записей</div></div><div class="lst" style="margin-top:0">${n?rows:'<p class="sub" style="padding:20px 18px">Пока никто не записался.</p>'}</div></section>`;
+  }else{
+    body=`<section class="card box lstbox"><div class="hd" style="padding-bottom:16px"><div><div class="cap">Структура</div><h2>Блайнды и ante</h2></div></div>
+     ${LEVELS.map(l=>l.br?`<div class="lvl br"><span class="n">—</span><div><b>Перерыв</b><small>Пауза</small></div><span class="mn">10 мин</span></div>`:`<div class="lvl"><span class="n">${String(l.n).padStart(2,'0')}</span><div><b>${fmt(l.sb)} / ${fmt(l.bb)}</b><small>ante ${fmt(l.ante)}</small></div><span class="mn">${l.min} мин</span></div>`).join('')}</section>`;
+  }
+  return `<div class="page"><a class="back" href="#/tournaments">${ic('chevl',18,2)}<u>Все турниры</u></a>${hero(t,sm)}
+   <div class="seg">${tabs.map(x=>`<button class="${x[0]===tab?'on':''}" data-a="open" data-h="#/tournaments/${t.id}/${x[0]}">${ic(x[1],18,1.8)}<span>${x[2]}</span></button>`).join('')}</div>${body}</div>`;
+};
+V.rating=()=>{
+  const b=S.rt==='bounty';const per=[['all','Общий','За всё время'],['oct','Октябрь 2026','Текущий'],['sep','Сентябрь 2026','']];
+  const mult={all:1.9,oct:1,sep:.84}[S.rp];const pn={all:'За всё время',oct:'Октябрь 2026',sep:'Сентябрь 2026'}[S.rp];
+  const src=b?PLAYERS_B:PLAYERS;
+  const rows=src.slice(0,20).map((p,i)=>{const v=b?Math.round(p.bty*mult):fmt(Math.round(p.pts*mult));
+    const pl=i<3?`<span class="pl" style="background:var(--paper-200)">${trophy(['var(--gold)','var(--silver)','var(--bronze)'][i],24)}</span>`:`<span class="pl">${i+1}</span>`;
+    return `<div class="pr-row" data-a="player" data-n="${esc(p.name)}">${pl}${av(p.name,48)}<b>${esc(p.name)}</b><div class="v"><strong>${v}</strong><small>${b?'bounty':'очков'}</small></div></div>`}).join('');
+  const hasH=S.demo.history;
+  return `<div class="page"><div class="rgrid"><div class="rl"><div style="padding-top:26px"><div class="cap">Клубный зачёт</div><h1 class="t" style="margin-top:6px">Октябрь 2026</h1><p class="sub">${b?'Кто собрал больше bounty.':'Позиция среди игроков клуба.'}</p></div>
+   <div class="seg2"><button class="${b?'':'on'}" data-a="rt" data-v="rating">Рейтинг</button><button class="${b?'on':''}" data-a="rt" data-v="bounty">Bounty</button></div>
+   <div class="per">${per.map(p=>`<button class="${S.rp===p[0]?'on':''}" data-a="rp" data-v="${p[0]}">${p[1]}${p[2]?`<small>${p[2]}</small>`:''}</button>`).join('')}</div>
+   <div class="mine"><div class="t1"><b>Ваш результат</b><span>${b?82:1282} ${b?'участника':'участника'}</span></div>
+    <div class="cols"><div><small>Место</small><div class="v">${hasH?'14':'—'}</div></div><div><small>${b?'Bounty':'Рейтинг'}</small><div class="v">${hasH?(b?9:'1 240'):0}</div></div><div><small>Посещения</small><div class="v">${hasH?12:0}</div></div></div></div>
+   </div><div class="rr2"><section class="card season"><div class="hd"><div><div class="cap">Зачёт сезона</div><h2>${b?'Лидеры по bounty':'Все участники'}</h2></div><span>${pn}</span></div>${rows}</section></div></div></div>`;
+};
+function histPlace(p){return p+'-е место'}
+V.history=()=>{
+  if(!S.demo.history)return `<div class="page nar"><div style="padding-top:26px"><h1 class="t">Ваша история</h1><p class="sub">Все турниры, в которых вы приняли участие.</p></div>
+   <div class="empty"><div class="ei">${ic('hist',34,1.6)}</div><h3>История участий пока пуста</h3><p>Сыграйте первый турнир — он появится здесь.</p><button class="sbtn" style="max-width:240px;margin:20px auto 0" data-a="open" data-h="#/tournaments">Все турниры</button></div></div>`;
+  return `<div class="page nar"><div style="padding-top:26px"><h1 class="t">Ваша история</h1><p class="sub">Все турниры, в которых вы приняли участие.</p></div>
+   <section class="chron"><div class="cap">Личная летопись</div><div class="st"><div><div class="v">12</div><small>вечеров в клубе</small></div><div><div class="v">2</div><small>финальных стола</small></div><div><div class="v">1 240</div><small>Рейтинг</small></div></div></section>
+   ${HIST.map(h=>`<article class="card hrow" data-a="open" data-h="#/history/${h.id}"><div class="m"><b>${esc(h.name)}</b><small>${h.date} · ${histPlace(h.place)}</small></div><div class="r"><b>+${h.pts} оч.</b></div>${ic('chev',18,2)}</article>`).join('')}</div>`;
+};
+V.historyItem=id=>{
+  const h=HIST.find(x=>x.id===id)||HIST[0];
+  return `<div class="page nar"><a class="back" href="#/history">${ic('chevl',18,2)}<u>В историю</u></a>
+  <section class="card res"><div class="cap" style="letter-spacing:.14em">Ваш турнир</div><h1>${esc(h.name)}</h1><div class="d">${h.date}</div>
+  <div class="tiles"><div class="tile pos"><small>Очки за турнир</small><b>+${h.pts}</b></div><div class="tile"><small>Место</small><b>${h.place}</b></div><div class="tile"><small>Входы</small><b>${h.entries}</b></div><div class="tile"><small>Add-on</small><b>${h.addon}</b></div><div class="tile w"><small>В турнире</small><b style="font-size:20px">${h.dur}</b></div></div>
+  <div class="tbl" style="padding:14px"><div class="cap">Ваш bounty</div><h3 style="font-size:17px;margin:4px 0 8px">Кого вы выбили</h3>${h.kills.length?h.kills.map((k,i)=>`<div class="kill">${av(k,34)}<b>${esc(k)}</b><span>${String(21+i)}:${10+i*7}</span></div>`).join(''):`<p class="sub" style="margin:4px 0 6px">В этом турнире у вас не было выбитых игроков.</p>`}</div>
+  <div class="tbl"><div class="hd"><div><div class="cap">Итоговая таблица</div><h3>Все участники</h3></div><span class="c">${h.n}</span></div>${resultsRows(h.id,Math.max(12,h.place+3),h.place)}</div></section></div>`;
+};
+V.profile=()=>{
+  const p=S.profile;const hasH=S.demo.history;
+  const card=hasH?`<div class="kc"><div class="stamps">${[1,1,1,1,1,1,1,1,1,1,1,1,0].map(x=>`<span style="width:9px;height:9px;border-radius:50%;background:${x?'#d9ae5c':'rgba(246,238,221,.2)'}"></span>`).join('')}</div><div class="cap">КЛУБНАЯ КАРТА</div><h3>Следующая карта · 13-я из 100</h3><div class="pg"><i style="width:13%"></i></div></div>`
+   :`<div class="kc"><div class="cap">КЛУБНАЯ КАРТА</div><h3>Первый след появится<br>после первого визита</h3></div>`;
+  return `<div class="page"><div class="pgrid"><div class="pl2"><div class="ph">${avMe(64)}<div><h1>${esc(p.nick)}</h1><small>В клубе с ${S.since}</small></div></div>${card}</div><div class="pr2">
+   <div class="menu"><button data-a="personal">${ic('user',22)}<span class="g">Личные данные</span>${ic('chev',18,2)}</button><button data-a="login">${ic('key',22)}<span class="g">Способы входа</span>${ic('chev',18,2)}</button>${hasH?`<button data-a="open" data-h="#/history">${ic('hist',22)}<span class="g">Клубная летопись</span>${ic('chev',18,2)}</button>`:''}</div>
+   <div class="sup"><h3>Техническая поддержка</h3><button data-a="support">Обратиться в поддержку</button></div>
+   <p class="foot" style="margin-top:22px"><a href="#/welcome" style="text-decoration:underline">Показать онбординг</a></p></div></div></div>`;
+};
+V.welcome=()=>`<div class="wel" style="max-width:480px;margin:0 auto"><div class="lg">${logoSvg(54,'#561a1b')}<b style="letter-spacing:.2em;font-size:12px">${BRAND}</b></div>
+  <div class="cap" style="margin-top:28px;text-align:center">Закрытый клуб интеллектуальной игры</div>
+  <h1>Первый вход.<br>Оформим участие</h1><p class="sub">Одна анкета — для всех будущих мероприятий клуба.</p>
+  <label class="fl">ФИО</label><div class="inp"><input id="w1" placeholder="Иванов Иван Иванович"></div>
+  <label class="fl">Дата рождения</label><div class="inp"><input id="w2" placeholder="дд.мм.гггг" inputmode="numeric"></div>
+  <label class="fl">Клубный ник</label><div class="inp"><input id="w3" placeholder="Как вас будут видеть за столом"></div>
+  <label class="fl">Телефон</label><div class="inp"><input id="w4" placeholder="+7" inputmode="tel"></div>
+  <label class="fl">Ник в Telegram</label><div class="inp"><input id="w5" placeholder="@username"></div>
+  <div class="age">${ic('shield',26,1.6)}<div><b>Участие с 18 лет</b>Клуб принимает только совершеннолетних игроков.</div></div>
+  ${[['Мне исполнилось 18 лет'],['Принимаю правила участия'],['Согласен(на) на обработку персональных данных']].map((c,i)=>`<label class="chk"><input type="checkbox" class="wc" data-a="wchk"><i>${ic('check',16,3)}</i><span>${c[0]}</span></label>`).join('')}
+  <button class="sbtn soft" id="wfin" data-a="wfin" style="height:54px;margin-top:24px">Завершить регистрацию</button></div>`;
+
+/* ================= ШТОРКИ ================= */
+let sheetKind=null;
+function sheet(title,body,kind){
+  sheetKind=kind||title;
+  $('#sheet').innerHTML=`<div class="sh-h"><h2>${title}</h2><button class="x" data-a="closeSheet" aria-label="Закрыть">${ic('x',22,2)}</button></div>${body}`;
+  $('#sheet').className='sheet'+(sheetKind==='tables'?' wide':'');
+  $('#sheetW').classList.add('on');$('#sheet').scrollTop=0;document.body.style.overflow='hidden';
+  if(!shOpen){try{history.pushState({sh:1},'')}catch(e){}shOpen=true;}
+}
+let shOpen=false;
+function hideSheet(){$('#sheetW').classList.remove('on');sheetKind=null;shOpen=false;document.body.style.overflow='';}
+function closeSheet(){if(!$('#sheetW').classList.contains('on'))return;if(shOpen){shOpen=false;try{history.back();return}catch(e){}}hideSheet();}
+window.addEventListener('popstate',()=>{if($('#sheetW').classList.contains('on'))hideSheet();});
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200);}
+
+function seatMarkup(tn){
+  const pos={1:[30,72],2:[14,60],3:[10,37],4:[21,19],5:[40,15],6:[60,14],7:[79,18],8:[90,37],9:[86,60],10:[70,72]};
+  const occ=SEATED[tn]||{};
+  let h=`<div class="tov"></div><div class="tnum">${tn}</div>`;
+  for(let i=1;i<=10;i++){
+    const [x,y]=pos[i];const nm=occ[i];
+    h+=`<div class="seat" style="left:${x}%;top:${y}%">`+(nm
+      ?`${av(nm,34)}<span class="bg">${i}</span><span class="nm">${esc(nm)}</span>`
+      :`<span class="gear"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="#d8c9b0" stroke="#d8c9b0" stroke-width="6" stroke-dasharray="3.2 2.6"/></svg><span>${i}</span></span>`)+`</div>`;
+  }
+  return h+`<div class="dealer"><i>Д</i><div><small>ДИЛЕР</small><b>Не назначен</b></div></div>`;
+}
+function tablesBody(){
+  const tn=S.tbl;
+  return `<div class="tbls">${TCNT.map((c,i)=>`<button class="${tn===i+1?'on':''}" data-a="tbl" data-v="${i+1}">Стол ${i+1}<small>${c}/10</small></button>`).join('')}</div>
+   <div class="tview">${seatMarkup(tn)}</div>
+   <h2 class="s" style="margin:28px 6px 6px;font-size:21px">Bounty за столом</h2>${feedList(tn)}`;
+}
+function openTables(){sheet('Столы турнира','<div id="tb">'+tablesBody()+'</div>','tables');}
+function openReg(id){
+  const t=tById(id);
+  sheet('Запись на турнир',`<div class="cap">Проверьте условия</div><h3 style="font-size:24px;text-transform:uppercase;margin-top:8px;font-weight:700">${esc(t.name)}</h3><p class="sub" style="margin-top:4px;color:var(--wine);font-weight:600">${esc(t.date)}</p>
+  <div class="conf"><div><small>Формат</small><b>${t.kind==='bounty'?'Bounty':'Классика'}</b></div><div><small>Орг. взнос</small><b>${t.fee}</b></div><div><small>Стартовый стек</small><b>${t.stack}</b></div><div><small>Регистрации</small><b>${regN(t)} из ${t.cap}</b></div></div>
+  <p class="sub" style="margin-top:0;line-height:1.45">После подтверждения турнир появится на главной. Запись можно отменить до check-in.</p>
+  <button class="sbtn" data-a="regOk" data-id="${id}" style="height:54px">Подтвердить запись</button>`,'reg');
+}
+function openNotifs(){
+  const list=S.demo.notifs?NOTIFS:[];const un=list.filter(n=>!S.read[n.id]);const rd=list.filter(n=>S.read[n.id]);
+  const item=n=>`<button class="ni ${S.read[n.id]?'rd':''}" data-a="notif" data-id="${n.id}"><span class="ico">${ic(n.ic,18,1.8)}</span><div><b>${esc(n.t)}</b><small>${esc(n.s)}</small></div></button>`;
+  let h=un.length?`<div class="nstat un"><span style="color:var(--wine)">${ic('bell',22)}</span><div><b>Не прочитано (${un.length})</b><small>Нажмите на уведомление, чтобы открыть</small></div></div>`
+    :`<div class="nstat">${ic('check',22,2.2)}<div><b>Всё прочитано</b><small>Новые уведомления появятся здесь</small></div></div>`;
+  if(un.length)h+=`<div class="ngh">Новые</div>`+un.map(item).join('');
+  if(rd.length)h+=`<div class="ngh">Прочитанные</div>`+rd.map(item).join('');
+  if(!list.length)h+=`<div class="empty" style="padding-top:34px"><div style="color:var(--burgundy)">${ic('bell',30,1.6)}</div><h3 style="font-size:15px;margin-top:10px">Уведомлений пока нет</h3></div>`;
+  sheet('Уведомления',h,'notifs');
+}
+let voteSel=-1;
+function openVote(){
+  voteSel=-1;
+  sheet('Оценка вечера',`<p class="sub" style="margin:-6px 0 16px">Выберите одного дилера</p>${DEALERS.map((d,i)=>`<button class="vote" data-a="vsel" data-v="${i}">${av(d,40)}${d}<span class="rad"></span></button>`).join('')}<button class="sbtn soft" id="vbtn" data-a="vok">Проголосовать</button>`,'vote');
+}
+function openPlayer(n){
+  const p=PLAYERS.find(x=>x.name===n)||PLAYERS[0];
+  sheet('Профиль игрока',`<div class="pubp"><div class="cap">Игрок ${BRAND}</div>${av(p.name,96)}<h3>${esc(p.name)}</h3><span class="rt">Рейтинг ${fmt(p.pts)}</span><p class="sub">${p.vis} клубных визитов</p></div>
+   <div class="ngh" style="margin-top:20px">По сезонам</div><div class="seas">${SEASONS.map((s,i)=>`<div><span>${s[0]}</span><b>${i===0?fmt(p.pts):fmt(Math.round(p.pts*(1-i*.22)))} оч.</b></div>`).join('')}</div>`,'player');
+}
+function fld(id,label,val,o={}){
+  return `<label class="fl">${label}</label><div class="inp"><input id="${id}" value="${esc(val)}" ${o.ro?'readonly':''} ${o.ph?`placeholder="${o.ph}"`:''}>${o.ro?'':`<button class="cl" data-a="clr" data-t="${id}" aria-label="Очистить">${ic('x',16,2)}</button>`}</div>${o.hint?`<div class="hint">${o.hint}</div>`:''}`;
+}
+function openPersonal(){
+  const p=S.profile;
+  sheet('Личные данные',`<div class="photo">${avMe(64)}<button class="btn-w" data-a="photo">${ic('cam',20)} Выбрать фото</button><p>Квадратное фото будет лучше смотреться за столом.</p></div>
+  ${fld('f1','ФИО',p.fio)}${fld('f2','Клубный ник',p.nick,{hint:'Именно его увидят дилер и другие игроки.'})}
+  <label class="fl">Ник в Telegram</label><div class="inp"><input value="${esc(p.tg)}" readonly></div>
+  ${fld('f4','Телефон',p.phone)}
+  <label class="fl">Email</label><div class="inp"><input value="${esc(p.email)}" readonly></div><div class="hint">Почта изменяется в разделе «Способы входа» после подтверждения кодом.</div>
+  <button class="sbtn" data-a="savep" style="height:54px">Сохранить</button>`,'personal');
+}
+function openLogin(step){
+  const p=S.profile;
+  const mail=p.emailOk?`<div class="h">${ic('mail',24)}<div><b>Электронная почта</b><small>Подключена · ${esc(p.email)}</small></div></div>`
+   :`<div class="h">${ic('mail',24)}<div><b>Электронная почта</b><small>Не подключена</small></div></div>
+     <div class="inp"><input id="em" value="${esc(p.email)}" ${step?'readonly':''}>${step?'':`<button class="cl" data-a="clr" data-t="em">${ic('x',16,2)}</button>`}</div>
+     ${step?`<div class="inp" style="margin-top:10px"><input id="cd" placeholder="Код из письма" inputmode="numeric" maxlength="4"></div><button class="sbtn" data-a="code" style="height:48px">Подтвердить код</button>`:`<button class="sbtn soft" data-a="mailok" style="height:48px">Подтвердить почту</button>`}`;
+  const tg=p.tgOk?`<div class="h">${ic('send',24)}<div><b>Telegram</b><small>Подключён · ${esc(p.tg)}</small></div></div>`:`<div class="h">${ic('send',24)}<div><b>Telegram</b><small>Не подключён</small></div></div>`;
+  sheet('Способы входа',`<div class="lm">${mail}</div><div class="lm" ${p.tgOk?'':'data-a="tgok" style="cursor:pointer"'}>${tg}</div>
+  <div class="lm"><div class="h">${ic('shield',24)}<div><b>Удаление аккаунта</b><small>Личные данные будут удалены, история клуба — обезличена</small></div></div><button class="sbtn wine" data-a="del" style="height:48px">${ic('trash',20)} Удалить аккаунт</button></div>
+  <p class="foot">Оба способа входа открывают один профиль, рейтинг и историю турниров.</p>`,'login');
+}
+function openSupport(){
+  sheet('Поддержка',`<label class="fl" style="margin-top:0">Что произошло?</label><div class="inp"><textarea id="sup" placeholder="Опишите проблему"></textarea></div><button class="sbtn" data-a="supok" style="height:54px">Отправить обращение</button>`,'support');
+}
+function openDemo(){
+  const d=S.demo;const o=(k,v,l)=>`<button class="${d[k]===v?'on':''}" data-a="dm" data-k="${k}" data-v="${v}">${l}</button>`;
+  sheet('Демо-меню',`<div class="dm"><div class="l">Live-турнир</div><div class="o">${o('live','run','Идёт')}${o('live','pause','Пауза')}${o('live','none','Нет')}</div></div>
+   <div class="dm"><div class="l">Есть история</div><div class="o">${o('history',true,'Да')}${o('history',false,'Нет')}</div></div>
+   <div class="dm"><div class="l">Есть уведомления</div><div class="o">${o('notifs',true,'Да')}${o('notifs',false,'Нет')}</div></div>
+   <div class="dm"><div class="l">Онбординг</div><div class="o"><button data-a="open" data-h="#/welcome">Открыть «Первый вход»</button></div></div>
+   <div class="dm"><div class="o"><button data-a="reset" style="background:#e9c9c5">Сбросить данные</button></div></div>`,'demo');
+}
+
+/* ================= КАРКАС ================= */
+function chrome(route){
+  const un=S.demo.notifs&&NOTIFS.some(n=>!S.read[n.id]);
+  $('#hdr').innerHTML=`<a href="#/home" class="logo" aria-label="${BRAND}">${logoSvg(28,'#561a1b')}<span>${BRAND}</span></a>
+   <div class="hdr-r"><button class="bell dmb" data-a="demo" aria-label="Демо-меню">${ic('sl',22,1.7)}</button><button class="bell" data-a="notifs" aria-label="Уведомления">${ic('bell',24,1.7)}${un?'<i></i>':''}</button><a href="#/profile" class="hav">${avMe(36)}</a></div>`;
+  $('#side').innerHTML=`<a href="#/home" class="slogo">${logoSvg(36,'#561a1b')}<b>${BRAND}</b></a><nav class="snav">${[['home','Главная','home'],['tournaments','Турниры','cal'],['rating','Рейтинг','trophy'],['history','История','hist'],['profile','Профиль','user']].map(t=>`<a href="#/${t[0]}" class="${route===t[0]?'on':''}">${ic(t[2],22,1.7)}<span>${t[1]}</span></a>`).join('')}</nav>
+   <div class="sfoot"><button class="sdemo" data-a="demo">${ic('sl',18,1.8)} Демо-меню</button><a href="#/profile" class="smini">${avMe(40)}<div><b>${esc(S.profile.nick)}</b><small>Профиль</small></div></a></div>`;
+  const tabs=[['home','Главная','home'],['tournaments','Турниры','cal'],['rating','Рейтинг','trophy'],['history','История','hist'],['profile','Профиль','user']];
+  $('#tabbar').innerHTML=tabs.map(t=>`<a href="#/${t[0]}" class="${route===t[0]?'on':''}">${ic(t[2],25,1.7)}<span>${t[1]}</span></a>`).join('');
+  const on=route!=='welcome';
+  $('#hdr').style.display=$('#tabbar').style.display=$('#side').style.display=on?'':'none';
+  document.body.classList.toggle('nochrome',!on);
+}
+let tick=null;
+function render(keep){
+  if(keep!==true)hideSheet();
+  const h=(location.hash||'#/home').replace(/^#\/?/,'');const p=h.split('/').filter(Boolean);
+  let route=p[0]||'home',html;
+  if(route==='tournaments'){
+    if(p[1]==='archive')html=p[2]?V.archiveItem(p[2]):V.archive();
+    else if(p[1])html=V.tournament(p[1],p[2]||'about');
+    else html=V.tournaments();
+  }else if(route==='history')html=p[1]?V.historyItem(p[1]):V.history();
+  else if(V[route])html=V[route]();
+  else{route='home';html=V.home();}
+  chrome(route);
+  $('#app').innerHTML=html;
+  window.scrollTo(0,0);
+  startTick();
+}
+function startTick(){
+  clearInterval(tick);const el=$('#liveTm');if(!el||S.demo.live==='none')return;
+  let sec=S.demo.live==='pause'?357:1062;
+  tick=setInterval(()=>{const e=$('#liveTm');if(!e){clearInterval(tick);return;}sec=sec>0?sec-1:(S.demo.live==='pause'?357:1062);
+    e.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');},1000);
+}
+function rerenderKeep(){const y=window.scrollY;render();window.scrollTo(0,y);}
+
+/* ================= СОБЫТИЯ ================= */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-a]');if(!el)return;
+  const a=el.dataset.a;
+  if(a==='open'){e.stopPropagation();const h=el.dataset.h;hideSheet();if(location.hash===h)render();else location.hash=h;return;}
+  if(el.tagName==='INPUT')return;
+  switch(a){
+    case 'closeSheet':closeSheet();break;
+    case 'tables':openTables();break;
+    case 'tbl':S.tbl=+el.dataset.v;save();$('#tb').innerHTML=tablesBody();break;
+    case 'reg':e.stopPropagation();openReg(el.dataset.id);break;
+    case 'regOk':S.reg[el.dataset.id]=true;save();closeSheet();toast('Регистрация подтверждена');rerenderKeep();break;
+    case 'unreg':delete S.reg[el.dataset.id];save();toast('Запись отменена');rerenderKeep();break;
+    case 'notifs':openNotifs();break;
+    case 'notif':{const n=NOTIFS.find(x=>x.id===el.dataset.id);S.read[n.id]=true;save();chrome((location.hash.split('/')[1])||'home');if(n.vote)openVote();else{hideSheet();location.hash=n.go;}break;}
+    case 'vsel':voteSel=+el.dataset.v;$('#sheet').querySelectorAll('.vote').forEach((b,i)=>b.classList.toggle('on',i===voteSel));$('#vbtn').classList.remove('soft');break;
+    case 'vok':if(voteSel<0){toast('Выберите дилера');break;}S.voted=true;save();sheet('Оценка вечера',`<div class="okc"><div class="ck">${ic('check',34,2.5)}</div><h3>Спасибо! Ваш голос учтён.</h3><p>Вы выбрали: ${DEALERS[voteSel]}</p></div><button class="sbtn" data-a="closeSheet">Закрыть</button>`,'vote');break;
+    case 'player':openPlayer(el.dataset.n);break;
+    case 'rt':S.rt=el.dataset.v;save();rerenderKeep();break;
+    case 'rp':S.rp=el.dataset.v;save();rerenderKeep();break;
+    case 'personal':openPersonal();break;
+    case 'login':openLogin(0);break;
+    case 'support':openSupport();break;
+    case 'supok':sheet('Поддержка',`<div class="okc"><div class="ck">${ic('check',34,2.5)}</div><h3>Обращение принято</h3><p>Мы ответим в Telegram в течение дня.</p></div><button class="sbtn" data-a="closeSheet">Закрыть</button>`,'support');break;
+    case 'clr':{const i=document.getElementById(el.dataset.t);if(i){i.value='';i.focus();}break;}
+    case 'photo':toast('Выбор фото недоступен в прототипе');break;
+    case 'savep':{const v=id=>document.getElementById(id).value.trim();if(!v('f2')){toast('Укажите клубный ник');break;}
+      Object.assign(S.profile,{fio:v('f1'),nick:v('f2'),phone:v('f4')});save();closeSheet();toast('Профиль обновлён');rerenderKeep();break;}
+    case 'mailok':{const v=document.getElementById('em').value.trim();if(!/^\S+@\S+\.\S+$/.test(v)){toast('Введите корректный email');break;}S.profile.email=v;openLogin(1);break;}
+    case 'code':{const c=document.getElementById('cd').value.trim();if(!/^\d{4}$/.test(c)){toast('Введите 4-значный код');break;}S.profile.emailOk=true;save();openLogin(0);toast('Почта подтверждена');break;}
+    case 'tgok':S.profile.tgOk=true;save();openLogin(0);toast('Telegram подключён');break;
+    case 'del':if(confirm('Удалить аккаунт? В прототипе данные не удаляются.'))toast('Запрос на удаление принят (демо)');break;
+    case 'demo':openDemo();break;
+    case 'dm':{const k=el.dataset.k;let v=el.dataset.v;if(v==='true')v=true;else if(v==='false')v=false;S.demo[k]=v;save();render(true);openDemo();break;}
+    case 'reset':S=DEF();save();render();toast('Данные сброшены');break;
+    case 'wchk':setTimeout(()=>{const ok=[...document.querySelectorAll('.wc')].every(c=>c.checked);$('#wfin').classList.toggle('soft',!ok);},0);break;
+    case 'wfin':if(document.querySelector('#wfin.soft'))toast('Отметьте все пункты');else{toast('Добро пожаловать в '+BRAND);location.hash='#/home';}break;
+  }
+});
+window.addEventListener('hashchange',render);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+
+/* ================= СТАРТ ================= */
+$('#splash').innerHTML=`${logoSvg(88,'#561a1b')}<b>${BRAND}</b><span>Загружаем ${BRAND}…</span>`;
+render();
+setTimeout(()=>{$('#splash').classList.add('off');setTimeout(()=>$('#splash').remove(),500)},800);
+</script>
+</body>
+</html>
