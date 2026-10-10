@@ -916,6 +916,30 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 .pp .ss div{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(86,26,27,.18);font-size:13px;line-height:18.85px;color:#2b1012}
 .pp .ss b{font-weight:700}
 @media(max-width:620px){.sheet.k-player{width:min(100%,360px)!important}.pp .st b{font-size:16px;line-height:23.2px}.pp .st div{padding:14px 5px}}
+
+@media(min-width:800px){.pgrid .ph h1{font-size:30px;line-height:32.4px;letter-spacing:-.54px;margin-top:2px}.pgrid .kc,.pgrid .menu{margin-top:4px}}
+
+/* notifications — as in original */
+.nst{display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.07);margin-bottom:14px}
+.nst .g{color:#4f9a6f;display:flex}.nst .w{color:#982020;display:flex}
+.nst strong{display:block;font-size:13px;font-weight:700;line-height:18.85px;color:#2b1012}
+.nst small{display:block;font-size:12px;line-height:17.4px;color:#6e5d57}
+.ngrp{border-top:1px solid rgba(86,26,27,.10);border-bottom:1px solid rgba(86,26,27,.10)}
+.ngrp+.ngrp{border-top:0}
+.nsum{display:flex;align-items:center;gap:8px;height:52px;padding:0 6px;font-size:12px;font-weight:650;line-height:17.4px;color:#65554f;list-style:none;cursor:pointer}
+.nsum::-webkit-details-marker{display:none}
+.nsum b{margin-left:auto;font-size:10px;font-weight:600;color:#6e5d57}
+.nsum svg{transition:transform .2s}details[open]>.nsum svg{transform:rotate(90deg)}
+div.ngrp>.nsum{cursor:default}
+.nr{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:8px 8px 8px 10px;border:0;border-radius:12px;background:none;text-align:left;cursor:pointer;color:#2b1012}
+.nr:hover{background:rgba(0,0,0,.04)}
+.nr .ico{flex:0 0 38px;height:38px;border-radius:11px;background:rgba(152,32,32,.12);color:#982020;display:flex;align-items:center;justify-content:center}
+.nr.rd .ico{background:rgba(0,0,0,.08);color:#2b1012}
+.nr .tx{flex:1;min-width:0}
+.nr strong{display:block;font-size:14px;font-weight:700;line-height:17.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nr time{display:block;font-size:12px;line-height:17.4px;color:#6e5d57;margin-top:2px}
+.nr>svg{flex:0 0 18px;color:#6e5d57}
+@media(min-width:800px){.sheet.k-notifs{width:min(100%,660px)!important;max-width:660px!important;padding:20px 22px 24px!important;border-radius:22px!important}}
 </style>
 </head>
 <body>
@@ -1022,7 +1046,7 @@ const NEWS = [
 /* ================= СОСТОЯНИЕ ================= */
 const KEY='pc_proto_v1';
 const DEF=()=>({reg:{},profile:{fio:'Алексей Громов',nick:'Alex_Ace',tg:'@alex_ace',phone:'8 (900) 123-45-67',email:'alex@example.com',emailOk:false,tgOk:false},
-  read:{n3:true},queue:{},voted:false,demo:{live:'pause',history:true,notifs:true,status:'none',card:'progress',empty:false,feed:false},rt:'rating',rp:'oct',tbl:1,since:'октября 2026 г.'});
+  read:{n1:true,n2:true,n3:true},queue:{},voted:false,demo:{live:'pause',history:true,notifs:true,status:'none',card:'none',empty:false,feed:false},rt:'rating',rp:'oct',tbl:1,since:'октября 2026 г.'});
 let S=DEF();
 try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r){S=Object.assign(DEF(),r);S.demo=Object.assign(DEF().demo,r.demo||{});S.profile=Object.assign(DEF().profile,r.profile||{});}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
@@ -1298,8 +1322,7 @@ V.profile=()=>{
    :`<div class="cap">КЛУБНАЯ КАРТА</div><h3>Первый след появится<br>после первого визита</h3>`;
   return `<div class="page"><div class="pgrid"><div class="pl2"><div class="ph">${avMe(64)}<div><h1>${esc(p.nick)}</h1><small>В клубе с ${S.since}</small></div></div><div class="kc">${kcIn}</div></div><div class="pr2">
    <div class="menu"><button data-a="personal">${ic('user',22)}<span class="g">Личные данные</span>${ic('chev',18,2)}</button><button data-a="login">${ic('key',22)}<span class="g">Способы входа</span>${ic('chev',18,2)}</button>${cd!=='none'?`<button data-a="chron">${ic('hist',22)}<span class="g">Клубная летопись</span>${ic('chev',18,2)}</button>`:''}</div>
-   <div class="sup"><h3>Техническая поддержка</h3><button data-a="support">Обратиться в поддержку</button></div>
-   <p class="foot" style="margin-top:22px"><a href="#/welcome" style="text-decoration:underline">Показать онбординг</a></p></div></div></div>`;
+   <div class="sup"><h3>Техническая поддержка</h3><button data-a="support">Обратиться в поддержку</button></div></div></div></div>`;
 };
 V.sys=kind=>{
   const E={error:{ic:'warn',t:`Не удалось загрузить ${BRAND}`,p:'Проверьте соединение и попробуйте ещё раз.',b:'Повторить',a:'retry'},
@@ -1363,11 +1386,12 @@ function openReg(id){
 }
 function openNotifs(){
   const list=S.demo.notifs?NOTIFS:[];const un=list.filter(n=>!S.read[n.id]);const rd=list.filter(n=>S.read[n.id]);
-  const item=n=>`<button class="ni ${S.read[n.id]?'rd':''}" data-a="notif" data-id="${n.id}"><span class="ico">${ic(n.ic,18,1.8)}</span><div><span class="nty">${esc(n.type)}</span><b>${esc(n.t)}</b><small>${esc(n.s)}</small></div></button>`;
-  let h=un.length?`<div class="nstat un"><span style="color:var(--wine)">${ic('bell',22)}</span><div><b>Не прочитано (${un.length})</b><small>Нажмите на уведомление, чтобы открыть</small></div></div>`
-    :`<div class="nstat">${ic('check',22,2.2)}<div><b>Всё прочитано</b><small>Новые уведомления появятся здесь</small></div></div>`;
-  if(un.length)h+=`<div class="ngh">Новые</div>`+un.map(item).join('');
-  if(rd.length)h+=`<div class="ngh">Прочитанные</div>`+rd.map(item).join('');
+  const short=d=>d.replace(/ 2026,/,' в');
+  const item=n=>`<button class="nr ${S.read[n.id]?'rd':''}" data-a="notif" data-id="${n.id}"><span class="ico">${ic(n.ic,18,1.8)}</span><span class="tx"><strong>${esc(n.t)}</strong><time>${short(n.date)}</time></span>${ic('chev',18,2)}</button>`;
+  let h=un.length?`<div class="nst"><span class="w">${ic('bell',18,2)}</span><div><strong>Не прочитано (${un.length})</strong><small>Нажмите на уведомление, чтобы открыть</small></div></div>`
+    :`<div class="nst"><span class="g">${ic('check',18,2.4)}</span><div><strong>Всё прочитано</strong><small>Новые уведомления появятся здесь</small></div></div>`;
+  if(un.length)h+=`<div class="ngrp"><div class="nsum">Новые<b>${un.length}</b></div>${un.map(item).join('')}</div>`;
+  if(rd.length)h+=`<details class="ngrp"${un.length?'':' open'}><summary class="nsum">Прочитанные<b>${rd.length}</b>${ic('chev',18,2)}</summary>${rd.map(item).join('')}</details>`;
   if(!list.length)h+=`<div class="empty" style="padding-top:34px"><div style="color:var(--burgundy)">${ic('bell',22,1.6)}</div><h3 style="font-size:13px;margin-top:10px">Уведомлений пока нет</h3></div>`;
   sheet('Уведомления',h,'notifs');
 }
