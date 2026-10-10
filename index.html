@@ -895,6 +895,27 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 }
 
 /*D-END*/
+
+/* player profile — compact centered card, as in original */
+#sheetW:has(.sheet.k-player){display:flex;align-items:center;justify-content:center;padding:20px}
+.sheet.k-player{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;width:min(100%,440px)!important;max-width:440px!important;max-height:calc(100dvh - 40px);padding:32px 24px 26px!important;border-radius:26px!important;border:1px solid rgba(0,0,0,.34);background:#f6eedd;animation:pop .22s cubic-bezier(.2,.8,.2,1)}
+.sheet.k-player .sh-h{position:absolute;top:15px;right:15px;height:auto;margin:0}
+.sheet.k-player .sh-h h2{display:none}
+.sheet.k-player .sh-h .x{width:42px;height:42px;background:#f8e9d2}
+.sheet.k-player .sh-h .x svg{width:22px;height:22px}
+.pp{text-align:center}
+.pp .cap{font-size:11px;font-weight:800;line-height:15.95px;letter-spacing:1.32px;color:#982020;text-transform:uppercase}
+.pp .ring{display:block;margin:20px auto 0;width:98px;height:98px;padding:0;border:3px solid #7c541c;border-radius:50%;background:none;cursor:pointer}
+.pp .ring .av{width:92px!important;height:92px!important;font-size:30px}
+.pp h3{margin:17px 0 0;font-size:28px;font-weight:400;line-height:30.8px;letter-spacing:-.504px;color:#2b1012}
+.pp .st{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
+.pp .st div{background:#f8e9d2;border-radius:14px;padding:14px 5px;display:flex;flex-direction:column;align-items:center}
+.pp .st span{font-size:11px;line-height:15.95px;color:#6e5d57}
+.pp .st b{font-size:22px;font-weight:700;line-height:31.9px;margin-top:6px;color:#2b1012}
+.pp h4{margin:24px 0 10px;text-align:left;font-size:14px;font-weight:700;line-height:15.96px;letter-spacing:-.252px;color:#2b1012}
+.pp .ss div{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(86,26,27,.18);font-size:13px;line-height:18.85px;color:#2b1012}
+.pp .ss b{font-weight:700}
+@media(max-width:620px){.sheet.k-player{width:min(100%,360px)!important}.pp .st b{font-size:16px;line-height:23.2px}.pp .st div{padding:14px 5px}}
 </style>
 </head>
 <body>
@@ -1364,8 +1385,9 @@ function openVote(){
 }
 function openPlayer(n){
   const p=PLAYERS.find(x=>x.name===n)||PLAYERS[0];
-  sheet('Профиль игрока',`<div class="pubp"><div class="cap">Игрок ${BRAND}</div><button class="avb" data-a="photoView" data-n="${esc(p.name)}" aria-label="Открыть фото">${av(p.name,96)}</button><h3>${esc(p.name)}</h3><span class="rt">Рейтинг ${fmt(p.pts)}</span><p class="sub">${p.vis} клубных визитов</p></div>
-   <div class="ngh" style="margin-top:20px">По сезонам</div><div class="seas">${SEASONS.map((s,i)=>`<div><span>${s[0]}</span><b>${i===0?fmt(p.pts):fmt(Math.round(p.pts*(1-i*.22)))} оч.</b></div>`).join('')}</div>`,'player');
+  sheet('',`<div class="pp"><div class="cap">Игрок ${BRAND}</div><button class="ring" data-a="photoView" data-n="${esc(p.name)}" aria-label="Посмотреть фото игрока">${av(p.name,92)}</button><h3>${esc(p.name)}</h3>
+   <div class="st"><div><span>Рейтинг</span><b>${fmt(p.pts)}</b></div><div><span>Bounty</span><b>${p.bty}</b></div><div><span>Посещения</span><b>${p.vis}</b></div></div>
+   <h4>По сезонам</h4><div class="ss">${SEASONS.slice(0,2).reverse().map((s,i,a)=>`<div><span>${s[0]}</span><b>${fmt(i===a.length-1?p.pts:Math.round(p.pts*.38))} оч.</b></div>`).join('')}</div></div>`,'player');
 }
 function openViewer(n){
   const sz=Math.min(340,window.innerWidth-48);
