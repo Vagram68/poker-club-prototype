@@ -441,18 +441,18 @@ body{background:#f6eedd}
 /* --- главная --- */
 .hgrid{margin:0 -4px}
 .hl{padding:0}
-.live{margin:10px 0 0;padding:20px 14px 0;border-radius:22px;background:#561a1b;height:241px}
-.live-top{min-height:173px}
-.live h3{font-size:28px;font-weight:400;line-height:30.24px;letter-spacing:-.98px;max-width:147px;min-height:121px}
-.live .open{font-size:12px;line-height:17.4px;max-width:147px;margin-top:4px;opacity:.7}
-.live-r{padding:0;margin-right:-6px;width:auto}
-.live-r .lv{font-size:11px;letter-spacing:.77px;opacity:.58;line-height:17px;height:17px}
-.live-r .lv.br{opacity:.9}
-.live-r .tm{font-size:28px;line-height:29.4px;letter-spacing:-1.12px}
-.live-r .bl{font-size:12px;line-height:16px;opacity:.68;margin-top:2px}
-.live-r .nx{font-size:11px;margin-top:3px;line-height:15px}
-.live-bot{margin:0 -14px;padding:0 14px;height:48px;border-top:1px solid rgba(248,233,210,.2)}
-.live-bot .pl{font-size:12px;opacity:.7;gap:6px}.live-bot .pl svg{width:17px;height:17px}
+.live{margin:10px 0 0;padding:0;border-radius:22px;background:#561a1b;height:auto}
+.live-top{display:grid;grid-template-columns:.8fr 1.2fr;gap:8px;padding:20px 14px 13px;min-height:0}
+.live h3{font-size:28px;font-weight:400;line-height:30.24px;letter-spacing:-.98px;max-width:none;min-height:0}
+.live .open{font-size:12px;line-height:17.4px;max-width:none;margin-top:4px;opacity:.7}
+.live-r{padding:0;margin:0;width:auto;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.live-r .lv{font-size:11px;letter-spacing:.77px;opacity:.58;line-height:15.95px}
+.live-r .lv.br{opacity:.58;color:#f6eedd}
+.live-r .tm{font-size:28px;line-height:29.4px;letter-spacing:-1.12px;margin:1px 0}
+.live-r .bl{font-size:12px;line-height:17.4px;opacity:.68;margin-top:0}
+.live-r .nx{font-size:12px;margin-top:0;line-height:17.4px;font-weight:400;color:#f6eedd;opacity:.68}
+.live-bot{margin:0;padding:0 14px;height:48px;border-top:1px dashed rgba(248,233,210,.2);gap:9px}
+.live-bot .pl{font-size:12px;opacity:.7;gap:5px}.live-bot .pl svg{width:17px;height:17px}
 .btn-light{height:40px;padding:0 8px;font-size:12px;font-weight:700;color:#4a151d;border-radius:9px;gap:3px;background:linear-gradient(#fff2dd,#edd6b6)}
 .btn-light svg{width:16px;height:16px}
 h2.s{font-size:19px;line-height:21.66px;letter-spacing:-.57px}
@@ -485,9 +485,10 @@ h2.s{font-size:19px;line-height:21.66px;letter-spacing:-.57px}
 .news p{font-size:13px;line-height:19.5px;margin-top:8px}
 /* --- шторки --- */
 .scrim{background:rgba(43,16,18,.5)}
-.sheet{left:0;transform:none;max-width:none;width:100%;max-height:calc(100vh - 100px);padding:32px 16px 28px;border-radius:22px 22px 0 0;background:#f6eedd;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+.sheet{left:0;transform:none;max-width:none;width:100%;max-height:calc(100vh - 100px);padding:14px 16px 28px;border-radius:22px 22px 0 0;background:#f6eedd;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
 @keyframes up{from{transform:translateY(100%)}to{transform:none}}
-.sh-h{margin-bottom:12px;height:48px}
+.sh-h{margin-bottom:9px;height:48px}
+.sheet.k-tables .sh-h{align-items:flex-start}
 .sh-h h2{font-size:20px;line-height:22.8px;letter-spacing:-.36px;font-weight:700}
 .x{width:48px;height:48px;background:rgba(133,28,45,.12);color:#2b1012}.x svg{width:20px;height:20px}
 .tbls{gap:6px}
@@ -511,9 +512,9 @@ h1.t{font-size:30px;font-weight:400;line-height:33.6px;letter-spacing:-1.05px}
 .pill{height:40px;padding:0 13px;gap:8px;font-size:11px;font-weight:700;background:#f8e9d2;border:1px solid rgba(86,26,27,.18);box-shadow:none;color:#561a1b}
 .pill svg{width:17px;height:17px}
 .tcard{border-radius:17px;background:#f8e9d2;border:1px solid rgba(86,26,27,.13);box-shadow:var(--shadow);margin-bottom:14px}
-.tw{height:500px}
+.tw{height:auto}
 .tw .cover{height:170px}.tw .cover .ct{font-size:42px;line-height:36px;letter-spacing:-2.1px;color:#f8e9d2}
-.th{height:307px}
+.th{height:auto}
 .th>div:first-child{width:132px!important}
 .th .cover .ct{font-size:22px;line-height:18.9px;letter-spacing:-1.1px;padding:0 6px;color:#f8e9d2}
 .cnt{width:68px;height:42px;padding:0;border-radius:14px;background:#fff3df;border:1px solid rgba(255,247,231,.7);display:flex;flex-direction:column;align-items:center;justify-content:center;top:14px;right:13px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
@@ -526,12 +527,12 @@ h1.t{font-size:30px;font-weight:400;line-height:33.6px;letter-spacing:-1.05px}
 .chip.open{background:rgba(200,138,61,.14);color:#7c541c}.chip.reg{background:rgba(79,154,111,.14);color:#2e6846}.chip.now{background:rgba(152,32,32,.1);color:#982020}
 .tname,.th .tname{font-size:21px;font-weight:700;line-height:23.94px;letter-spacing:-.378px;margin-top:12px}
 .tdate{font-size:13px;font-weight:700;color:#561a1b;margin-top:8px;line-height:17px}
-.tdesc{font-size:12px;line-height:18.6px;margin-top:10px;-webkit-line-clamp:4}
-.tmeta{font-size:11px;color:#6e5d57;margin-top:12px;line-height:15px}
+.tdesc{font-size:12px;line-height:18.6px;margin-top:10px;-webkit-line-clamp:4;min-height:74px}
+.tmeta{font-size:11px;color:#6e5d57;margin-top:12px;line-height:15px;margin-bottom:9px}
 .btn,.th .btn{height:48px;border-radius:9px;background:#982020;box-shadow:none;font-size:13px;font-weight:600;color:#f6eedd;margin-top:auto;gap:10px}
 .btn svg{width:18px;height:18px}
 .tbody .btn{margin-top:auto}
-.btn.dis{background:#982020;opacity:.6}
+.btn.dis{background:#982020;opacity:.72}
 .btn.line{background:transparent;border:1.5px solid #561a1b;color:#561a1b;opacity:1}
 .tcard{border:0}.tw{display:flex;flex-direction:column}.tw .tbody{flex:1}
 .th .chip{padding:0 16px}
@@ -542,28 +543,28 @@ h1.t{font-size:30px;font-weight:400;line-height:33.6px;letter-spacing:-1.05px}
 .arch{margin:22px 0 0}
 .arch li{height:72px;padding:0;gap:12px}
 .arch .ic{width:32px;height:32px;background:rgba(133,28,45,.12);color:#851c2d}.arch .ic svg{width:18px;height:18px}
-.arch b{font-size:13px;font-weight:700;line-height:17px;text-transform:none}
-.arch small{font-size:12px;color:#6e5d57;margin-top:2px}
+.arch b{font-size:13px;font-weight:700;line-height:18.85px;text-transform:none}
+.arch small{font-size:12px;color:#6e5d57;margin-top:4px}
 .arch li>svg{width:18px;height:18px;margin-right:2px}
-.res{margin-top:12px;padding:18px;border-radius:17px;background:#f8e9d2;border:1px solid rgba(86,26,27,.13)}
-.res .cap{font-size:12px;font-weight:800;letter-spacing:1.2px;color:#561a1b!important}
-.res h1{font-size:30px;font-weight:700;line-height:34.2px;letter-spacing:-.54px;margin-top:8px}
-.res .d{font-size:13px;color:#65554f;margin-top:6px}
+.res{margin-top:12px;padding:22px 18px 18px;border-radius:17px;background:#f8e9d2;border:1px solid rgba(86,26,27,.13)}
+.res>.cap{font-size:12px;font-weight:800;letter-spacing:1.2px;color:#561a1b!important;line-height:17.4px}
+.res h1{font-size:30px;font-weight:700;line-height:34.2px;letter-spacing:-.54px;margin-top:0}
+.res .d{font-size:13px;color:#65554f;margin-top:7px;line-height:20.15px}
 .tbl{margin-top:16px;border-radius:14px;background:#eadcc4}
-.tbl .hd{padding:14px}
-.tbl .hd h3{font-size:17px;margin-top:3px}.tbl .hd .c{font-size:13px;color:#6e5d57}
-.tbl .cap{font-size:8px;font-weight:800;letter-spacing:1.04px;color:#982020}
+.tbl .hd{padding:20px 14px 14px}
+.tbl .hd h3{font-size:17px;margin-top:3px;line-height:19.38px}.tbl .hd .c{font-size:13px;color:#6e5d57}
+.tbl .cap{font-size:8px;font-weight:800;letter-spacing:1.04px;color:#982020;line-height:11.6px}
 .rr{gap:9px;padding:0 12px}.rr .pl{width:34px;font-size:13px}
 .rr b{font-size:12px;font-weight:700}.rr .pts{font-size:11px;font-weight:700;color:#2e6846}
 .rr .pl svg{width:18px;height:18px}
 /* --- карточка турнира --- */
 .hero{height:280px;border-radius:20px;padding:20px 20px 18px;background-color:#3a1017}
 .hero.sm{height:172px;padding:16px 20px 14px}
-.hero .cnt{top:16px!important;right:13px!important;width:73px;height:44px}
+.hero .cnt{top:16px!important;right:16px!important;width:73px;height:44px}
 .hero .cnt b{font-size:14px;font-weight:700}
 .hero .ek{font-size:9px;font-weight:800;letter-spacing:1.44px;color:#efc77e}
 .hero h1{font-size:34px;font-weight:400;line-height:32.6px;letter-spacing:-1.36px;color:#fff7e7;margin-top:8px}
-.hero.sm h1{font-size:25px;line-height:26px;letter-spacing:-1px}
+.hero.sm h1{font-size:25px;line-height:24px;letter-spacing:-1px}
 .hero .dp{height:31px;display:flex;align-items:center;padding:0 17px;font-size:12px;font-weight:700;color:#fff4df;background:rgba(18,8,9,.48);border:1px solid rgba(255,247,231,.18);margin-top:12px}
 .seg{margin:12px 0;padding:4px;border-radius:13px;background:#f8e9d2;border:1px solid rgba(86,26,27,.18);gap:0}
 .seg button{height:48px;padding:0 10px;border-radius:9px;font-size:11px;font-weight:650;color:#6e5d57;gap:6px;justify-content:flex-start}
@@ -594,7 +595,7 @@ h1.t{font-size:30px;font-weight:400;line-height:33.6px;letter-spacing:-1.05px}
 .page .sub{margin-top:6px!important}
 h1.t+span svg{width:24px;height:24px}
 .res{margin-top:0}
-.res .cap{letter-spacing:1.2px!important}
+
 .tbl{border:1px solid rgba(86,26,27,.18)}
 
 .addr{min-height:79px;align-items:center}
@@ -643,7 +644,7 @@ h1.t+span svg{width:24px;height:24px}
 .sup h3{font-size:15px}
 .sup button{height:48px;margin-top:9px;padding:0 11px;border-radius:7px;background:#561a1b;font-size:13px;font-weight:400}
 /* --- формы в шторках --- */
-.fl{font-size:12px;color:#6e5d57;margin:12px 0 4px;line-height:16px}
+.fl{font-size:12px;color:#6e5d57;margin:10px 0 4px;line-height:17.4px}
 .inp{gap:0}
 .inp input,.inp textarea{height:48px;padding:0 12px;border-radius:9px;border:1px solid rgba(86,26,27,.18);background:#f8e9d2;font-size:16px}
 .inp textarea{height:104px;padding:10px 12px;font-size:16px}
@@ -651,24 +652,26 @@ h1.t+span svg{width:24px;height:24px}
 .inp input+.cl{margin-left:0}
 .inp .cl svg{width:16px;height:16px}
 .inp:has(.cl) input{padding-right:12px}
-.hint{font-size:10px;margin-top:4px;line-height:12px}
-.photo{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:12px;border-radius:12px;background:#f8e9d2;border:0;align-items:center}
-.photo .pc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.hint{font-size:7px;margin-top:4px;line-height:10.15px;color:#6e5d57}
+.inp input[readonly]{background:#f8e9d2;border-color:rgba(86,26,27,.18)}
+.photo{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:12px;border-radius:12px;background:#f8e9d2;border:0;align-items:start}
+.photo .pc{display:flex;flex-direction:column;gap:7px;min-width:0}
 .photo .pr1{display:flex;align-items:center;gap:10px}
 .photo .btn-w{height:44px;padding:0 12px;border-radius:9px;font-size:11px;font-weight:600;background:#fffaf0;border:1px solid rgba(86,26,27,.18);box-shadow:none;gap:6px;white-space:nowrap}
 .photo .btn-w svg{width:17px;height:17px}
 .photo .lnk{font-size:10px;line-height:12px;flex:1;padding:0}
 .photo p{font-size:10px;line-height:12px;padding:0;margin:0;color:#6e5d57}
-.sbtn{height:48px;border-radius:9px;font-size:13px;font-weight:600;background:#561a1b;margin-top:16px}
+.sbtn{height:48px;border-radius:9px;font-size:13px;font-weight:600;background:#561a1b;margin-top:12px}
 .sbtn.wine{background:#9d2f3a;border-radius:11px;height:44px;font-size:15px;font-weight:700}
 .sbtn.soft{background:#982020;opacity:.55;color:#fff8e9;border-radius:11px;height:44px;font-size:15px;font-weight:700}
 .lm{margin:0 16px 12px;padding:16px;border-radius:14px;background:#f8e9d2}
 .lm .h{gap:11px}.lm .h svg{width:21px;height:21px}
-.lm b{font-size:15px}.lm small{font-size:11px;color:#6e5d57}
+.lm b{font-size:15px;line-height:21.75px}.lm small{font-size:11px;color:#6e5d57;line-height:15.95px;margin-top:3px}
 .lm .inp{margin-top:12px;gap:3px}.lm .inp input{height:48px;font-size:16px;border-radius:11px;background:#ecdfca}
 .lm .sbtn{height:44px;border-radius:11px;font-size:15px;font-weight:700;margin-top:12px}
 .lm .sbtn:not(.soft):not(.wine){background:#982020}
 .foot{font-size:11px;line-height:16.5px;color:#6e5d57}
+.k-login .foot{margin:12px 16px 16px;padding:0}.lmg{padding-top:16px}
 .sc{padding:16px;border-radius:12px;background:#f8e9d2}
 .sc svg{display:block;margin-bottom:12px;color:#851c2d}
 .sc .fl{margin:0 0 6px}
@@ -692,6 +695,34 @@ h1.t+span svg{width:24px;height:24px}
 .hrow b{font-size:13px}.hrow small{font-size:12px}
 .chron{border-radius:17px}.chron .v{font-size:24px}
 .tile b{font-size:20px}
+/* --- история (структура оригинала) --- */
+.player-title{margin-bottom:22px}
+.hed{position:relative;overflow:hidden;background:#2b1014;border-radius:16px;min-height:164px;margin:-4px 0 14px}
+.hed .hedbg{position:absolute;inset:0;width:100%;height:100%}
+.hed::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,8,9,.9) 0%,rgba(18,8,9,.48) 52%,rgba(18,8,9,.08) 100%)}
+.hed>div{position:relative;z-index:1;color:#f6eedd;max-width:58%;padding:22px 18px}
+.hed span{color:#c88a3d;letter-spacing:.13em;font-size:7px;font-weight:700}
+.hed strong{display:block;font-size:20px;font-weight:400;line-height:1.15;margin-top:13px}
+.hed .chron-l{margin-top:12px;font-size:12px}
+.hsum{border-top:1px solid rgba(86,26,27,.18);border-bottom:1px solid rgba(86,26,27,.18);display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:25px;padding:15px 0}
+.hsum>div{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hsum>div+div{border-left:1px solid rgba(86,26,27,.18)}
+.hsum strong{font-size:25px;font-weight:400}.hsum span{color:#6e5d57;font-size:11px}
+.hyear{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.hyear span{color:#6e5d57;font-size:11px}.hyear i{flex:1;height:1px;background:rgba(86,26,27,.18)}
+.pempty{border:1px dashed rgba(86,26,27,.18);min-height:150px;margin-top:10px;color:#6e5d57;text-align:center;border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px}
+.pempty h2{color:#2b1012;margin-top:10px;font-size:17px;font-weight:700;line-height:19.38px;letter-spacing:-.306px}
+.hevs{margin:0;padding:0;list-style:none}
+.hev{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:72px;border-bottom:1px solid rgba(86,26,27,.18);color:inherit}
+.hev .hic{width:32px;height:32px;border-radius:50%;background:rgba(133,28,45,.12);color:#561a1b;display:grid;place-items:center}
+.hev strong{display:block;font-size:13px;font-weight:700;text-transform:uppercase}.hev small{display:block;font-size:12px;color:#6e5d57;margin-top:4px}
+.hev b{font-size:12px;color:#2e6846}
+
+.sc .fl{margin:0 0 8px;color:#65554f}.sc .inp textarea{height:104px}
+.tview{margin-top:12px}
+
+.page.nar>.player-title{padding-top:24px}
+.hsum strong{line-height:32px}.hsum span,.hyear span{line-height:15.95px}
 
 /*M-END*/
 /*D-START*/
@@ -700,12 +731,9 @@ h1.t+span svg{width:24px;height:24px}
 .hdr{height:68px;padding:0 calc(50% - 242px)}
 .page{max-width:520px;margin:0 auto;padding-left:16px;padding-right:16px}
 .hgrid{margin:0}
-.live{margin-top:18px;height:auto}
-.live-top{min-height:101px}
-.live-top>div:first-child{flex:1 1 auto;min-width:0}
-.live h3{font-size:31px;line-height:33.48px;letter-spacing:-1.085px;max-width:none;min-height:0}
-.live .open{max-width:none}
-.live-r{flex:none}
+.live{margin-top:18px}
+.live-top{grid-template-columns:1fr 1.4fr;gap:18px;padding:20px 17px 13px}
+.live h3{font-size:31px;line-height:33.48px;letter-spacing:-1.085px}
 .live-r .tm{font-size:31px;line-height:32.55px;letter-spacing:-1.24px}
 .tabbar{left:50%;right:auto;transform:translateX(-50%);width:500px;height:64px;bottom:10px}
 .tabbar a{height:54px}
@@ -739,21 +767,15 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 .hgrid{margin:0;display:block}
 .hl,.hr{display:block}
 /* главная */
-.live{margin:0;height:auto;border-radius:22px;padding:0}
-.live-top{padding:24px 28px;min-height:120px}
-.live h3{font-size:32px;line-height:34.56px;letter-spacing:-1.12px;min-height:0;max-width:none}
-.live-top>div:first-child{flex:1 1 auto;min-width:0}
-.live-r{flex:none}
-.live .open{font-size:13px;line-height:18.85px;max-width:none;margin-top:4px}
-.live-r{margin-right:0}
-.live-r .lv{font-size:11px;line-height:15.95px;height:auto}
+.live{margin:0}
+.live-top{grid-template-columns:1fr 1.4fr;gap:18px;padding:24px 28px}
+.live h3{font-size:32px;line-height:34.56px;letter-spacing:-1.12px}
+.live .open{font-size:13px;line-height:18.85px}
+.live-r .lv{font-size:11px}
 .live-r .tm{font-size:34px;line-height:35.7px;letter-spacing:-1.36px}
-.live-r .bl{font-size:13px;line-height:18.85px;margin-top:2px}
-.live-r .nx{font-size:12px}
-.live-bot{height:58px;padding:0 24px}
+.live-r .bl,.live-r .nx{font-size:13px;line-height:18.85px}
+.live-bot{height:58px;padding:0 24px;gap:14px}
 .live-bot .pl{font-size:13px}.btn-light{font-size:13px;padding:0 12px}
-.live.idle{padding-bottom:0}
-.live.idle .live-top{min-height:90px}
 .sec-h{margin:28px 3px 0}
 .rcard{min-height:calc((var(--cw) - 46px)*.2373 + 49px)}
 .cta{margin-top:13px}
@@ -774,8 +796,8 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 .tbody,.th .tbody{padding:22px}
 .tname,.th .tname{font-size:22px;line-height:25.08px;letter-spacing:-.396px;margin-top:10px}
 .tdate{font-size:14px;line-height:17.5px;margin-top:5px}
-.tdesc{font-size:13px;line-height:20.15px;margin-top:10px;-webkit-line-clamp:3}
-.tmeta{font-size:12px;line-height:17.4px;margin-top:12px}
+.tdesc{font-size:13px;line-height:20.15px;margin-top:10px;-webkit-line-clamp:3;min-height:60px}
+.tmeta{font-size:12px;line-height:17.4px;margin-top:12px;margin-bottom:0}
 .tcard .btn{margin-top:auto}
 .tbody .btn{margin-top:auto}
 /* назад / архив */
@@ -871,8 +893,7 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 .k-personal .photo{padding:16px}
 .lmg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
 .lmg .lm{margin:0}.lmg .lm:nth-child(3){grid-column:1/-1}
-.k-login .foot{margin-top:12px}
-.lm .inp{margin-top:16px}.lm .sbtn{margin-top:16px}
+.k-login .foot{margin:12px 0 8px;padding:0}.lmg{padding-top:8px}
 .ni{padding:8px 8px 8px 10px;border-radius:12px;min-height:58px;align-items:center;gap:10px;margin-bottom:8px}
 .ni .ico{width:38px;height:38px;border-radius:11px}
 .ni .nty{display:none}
@@ -893,6 +914,14 @@ body.nochrome .phone{margin:0 auto;max-width:720px;padding-top:0}
 .pgrid{grid-template-columns:minmax(460px,1.15fr) minmax(330px,.85fr);column-gap:clamp(28px,4vw,52px)}
 .pgrid .ph{grid-column:1/-1}
 }
+@media(min-width:800px){
+.hed{min-height:210px}.hed>div{max-width:52%;padding:34px 30px}.hed span{font-size:10px}.hed strong{margin-top:18px;font-size:30px}
+.hsum{padding:18px 0}.hsum strong{font-size:30px;line-height:38px}.hsum span{font-size:12px;line-height:17.4px}
+.hevs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+.hev{min-height:64px}.hev strong{font-size:14px}
+}
+
+@media(min-width:800px){.page.nar>.player-title{padding-top:0}}
 
 /*D-END*/
 
@@ -940,6 +969,8 @@ div.ngrp>.nsum{cursor:default}
 .nr time{display:block;font-size:12px;line-height:17.4px;color:#6e5d57;margin-top:2px}
 .nr>svg{flex:0 0 18px;color:#6e5d57}
 @media(min-width:800px){.sheet.k-notifs{width:min(100%,660px)!important;max-width:660px!important;padding:20px 22px 24px!important;border-radius:22px!important}}
+
+@media(max-width:620px){.live+.rcard,.hl+.hr .rcard,.rcard{margin-top:20px}}
 </style>
 </head>
 <body>
@@ -962,7 +993,7 @@ const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
 /* ================= ДАННЫЕ ================= */
 const TOURS = [
-  {id:'t1', name:'MIDNIGHT ULTRA BOUNTY', cover:'BOUNTY NIGHT', kind:'bounty', date:'9 октября в 19:00', reg:84, cap:90, st:'live',
+  {id:'t1', name:'AUTUMN CUP', cover:'BOUNTY NIGHT', kind:'bounty', date:'9 октября в 19:00', reg:84, cap:90, st:'live',
    desc:'Ночной турнир с повышенными наградами за каждого выбитого соперника. Каждый нокаут приносит ULTRA-баунти, а лучшие охотники вечера получают призы от клуба. Приходите за азартом и острыми раздачами.',
    meta:'Bounty · 150 рейтинговых очков', fee:'1 500 ₽', stack:'40 000', re:'1 500 ₽', addon:'1 500 ₽',
    fmt:'Нокаут-турнир с прогрессивным баунти: за каждого выбитого игрока вы забираете часть его награды. Один вход, один re-entry до конца поздней регистрации, add-on на перерыве.', hue:350},
@@ -1046,7 +1077,7 @@ const NEWS = [
 /* ================= СОСТОЯНИЕ ================= */
 const KEY='pc_proto_v1';
 const DEF=()=>({reg:{},profile:{fio:'Алексей Громов',nick:'Alex_Ace',tg:'@alex_ace',phone:'8 (900) 123-45-67',email:'alex@example.com',emailOk:false,tgOk:false},
-  read:{n1:true,n2:true,n3:true},queue:{},voted:false,demo:{live:'pause',history:true,notifs:true,status:'none',card:'none',empty:false,feed:false},rt:'rating',rp:'oct',tbl:1,since:'октября 2026 г.'});
+  read:{n1:true,n2:true,n3:true},queue:{},voted:false,demo:{live:'break',history:false,notifs:true,status:'none',card:'none',empty:false,feed:false,tg:true},rt:'rating',rp:'oct',tbl:1,since:'октября 2026 г.'});
 let S=DEF();
 try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r){S=Object.assign(DEF(),r);S.demo=Object.assign(DEF().demo,r.demo||{});S.profile=Object.assign(DEF().profile,r.profile||{});}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
@@ -1180,7 +1211,7 @@ function liveCard(){
    <div class="live-bot"><span class="pl">${ic('cal',20)} ${esc(TOURS[1].date)}</span><button class="btn-light" data-a="open" data-h="#/tournaments/t2/about">Открыть ${ic('chev',16,2.2)}</button></div></div>`;
   const L=I.L;
   return `<div class="live"><div class="live-top"><div><h3>${esc(TOURS[0].name)}</h3><div class="open">Открытый просмотр турнира</div></div>
-   <div class="live-r"><div class="lv ${I.m==='pause'||I.m==='break'?'br':''}">${I.label}</div><div class="tm" id="liveTm">${mmss(I.sec)}</div><div class="bl">${fmt(L.sb)} / ${fmt(L.bb)} · ante ${fmt(L.ante)}</div>${I.fin?'<div class="nx fin">Финальный уровень</div>':''}</div></div>
+   <div class="live-r"><div class="lv ${I.m==='pause'||I.m==='break'?'br':''}">${I.label}</div><div class="tm" id="liveTm">${mmss(I.sec)}</div><div class="bl">${I.m==='break'&&I.nx?'Далее '+fmt(I.nx.sb)+' / '+fmt(I.nx.bb):fmt(L.sb)+' / '+fmt(L.bb)+' · ante '+fmt(L.ante)}</div>${I.fin?'<div class="nx fin">Финальный уровень</div>':''}</div></div>
    <div class="live-bot"><span class="pl">${ic('users',20)} 10 в игре</span><button class="btn-light" data-a="tables">Все столы ${ic('chev',16,2.2)}</button></div></div>`;
 }
 const FK={ko:'target',out:'x',re:'refresh',addon:'plus',seat:'chair'};
@@ -1286,26 +1317,30 @@ V.tournament=(id,tab)=>{
 };
 V.rating=()=>{
   const b=S.rt==='bounty';const per=[['all','Общий','За всё время'],['oct','Октябрь 2026','Текущий'],['sep','Сентябрь 2026','']];
-  const mult={all:1.9,oct:1,sep:.84}[S.rp];const pn={all:'За всё время',oct:'Октябрь 2026',sep:'Сентябрь 2026'}[S.rp];
+  const mult={all:1.9,oct:1,sep:.84}[S.rp];const pn={all:'за всё время',oct:'Октябрь 2026',sep:'Сентябрь 2026'}[S.rp];const h1t={all:'Общий рейтинг',oct:'Октябрь 2026',sep:'Сентябрь 2026'}[S.rp];
+  const pc=(b?{all:207,oct:82,sep:161}:{all:1316,oct:1316,sep:1204})[S.rp];const pl_=n=>{const a=n%100,z=n%10;return a>10&&a<15?'участников':z===1?'участник':z>1&&z<5?'участника':'участников'};
   const src=b?PLAYERS_B:PLAYERS;
   const rows=src.slice(0,20).map((p,i)=>{const v=b?Math.round(p.bty*mult):fmt(Math.round(p.pts*mult));
     const pl=i<3?`<span class="pl" style="background:var(--paper-200)">${trophy(['var(--gold)','var(--silver)','var(--bronze)'][i],24)}</span>`:`<span class="pl">${i+1}</span>`;
     return `<div class="pr-row" data-a="player" data-n="${esc(p.name)}">${pl}${av(p.name,48)}<b>${esc(p.name)}</b><div class="v"><strong>${v}</strong><small>${b?'bounty':'очков'}</small></div></div>`}).join('');
   const hasH=S.demo.history;
-  return `<div class="page"><div class="rgrid"><div class="rl"><div style="padding-top:26px"><div class="cap">Клубный зачёт</div><h1 class="t" style="margin-top:6px">Октябрь 2026</h1><p class="sub">${b?'Кто собрал больше bounty.':'Позиция среди игроков клуба.'}</p></div>
+  return `<div class="page"><div class="rgrid"><div class="rl"><div style="padding-top:26px"><div class="cap">Клубный зачёт</div><h1 class="t" style="margin-top:6px">${h1t}</h1><p class="sub">${b?'Кто собрал больше bounty.':'Позиция среди игроков клуба.'}</p></div>
    <div class="seg2"><button class="${b?'':'on'}" data-a="rt" data-v="rating">Рейтинг</button><button class="${b?'on':''}" data-a="rt" data-v="bounty">Bounty</button></div>
    <div class="per">${per.map(p=>`<button class="${S.rp===p[0]?'on':''}" data-a="rp" data-v="${p[0]}">${p[1]}${p[2]?`<small>${p[2]}</small>`:''}</button>`).join('')}</div>
-   <div class="mine"><div class="t1"><b>Ваш результат</b><span>${b?82:1282} ${b?'участника':'участника'}</span></div>
+   <div class="mine"><div class="t1"><b>Ваш результат</b><span>${S.demo.empty?0:pc} ${pl_(S.demo.empty?0:pc)}</span></div>
     <div class="cols"><div><small>Место</small><div class="v">${hasH?'14':'—'}</div></div><div><small>${b?'Bounty':'Рейтинг'}</small><div class="v">${hasH?(b?9:'1 240'):0}</div></div><div><small>Посещения</small><div class="v">${hasH?12:0}</div></div></div></div>
-   </div><div class="rr2"><section class="card season"><div class="hd"><div><div class="cap">Зачёт сезона</div><h2>${b?'Лидеры по bounty':'Все участники'}</h2></div><span>${pn}</span></div>${S.demo.empty?emptyBox('users','В этом сезоне пока нет участников.'):rows}</section></div></div></div>`;
+   </div><div class="rr2"><section class="card season"><div class="hd"><div><div class="cap">${S.rp==='all'?'Общий зачёт':'Зачёт сезона'}</div><h2>${b?'Лидеры по bounty':'Все участники'}</h2></div><span>${pn}</span></div>${S.demo.empty?emptyBox('users','В этом сезоне пока нет участников.'):rows}</section></div></div></div>`;
 };
 function histPlace(p){return p+'-е место'}
 V.history=()=>{
-  if(!S.demo.history)return `<div class="page nar"><div style="padding-top:26px"><h1 class="t">Ваша история</h1><p class="sub">Все турниры, в которых вы приняли участие.</p></div>
-   <div class="empty"><div class="ei">${ic('hist',34,1.6)}</div><h3>История участий пока пуста</h3><p>Сыграйте первый турнир — он появится здесь.</p><button class="sbtn" style="max-width:240px;margin:20px auto 0" data-a="open" data-h="#/tournaments">Все турниры</button></div></div>`;
-  return `<div class="page nar"><div style="padding-top:26px"><h1 class="t">Ваша история</h1><p class="sub">Все турниры, в которых вы приняли участие.</p></div>
-   <section class="chron"><div class="cap">Личная летопись</div><div class="st"><div><div class="v">12</div><small>вечеров в клубе</small></div><div><div class="v">2</div><small>финальных стола</small></div><div><div class="v">1 240</div><small>Рейтинг</small></div></div><button class="chron-l" data-a="chron">Клубная летопись ${ic('arr',18,2)}</button></section>
-   ${HIST.map(h=>`<article class="card hrow" data-a="open" data-h="#/history/${h.id}"><div class="m"><b>${esc(h.name)}</b><small>${h.date} · ${histPlace(h.place)}</small></div><div class="r"><b>+${h.pts} оч.</b></div>${ic('chev',18,2)}</article>`).join('')}</div>`;
+  const hasH=S.demo.history;
+  const st=hasH?[12,2,9]:[0,0,0];
+  const top=`<div class="player-title"><h1 class="t">Ваша история</h1><p class="sub">Все турниры, в которых вы приняли участие.</p></div>
+   <section class="hed"><svg class="hedbg" viewBox="0 0 380 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3a1417"/><stop offset="1" stop-color="#190a0c"/></linearGradient></defs><rect width="380" height="170" fill="url(#hg)"/><g transform="rotate(-12 280 90)"><rect x="236" y="30" width="70" height="98" rx="9" fill="#f1e4cc"/><text x="246" y="62" font-size="26" fill="#851c2d">♠</text></g><g transform="rotate(8 330 100)"><rect x="296" y="40" width="70" height="98" rx="9" fill="#e8d7bc"/><text x="306" y="72" font-size="26" fill="#851c2d">♦</text></g><ellipse cx="300" cy="170" rx="160" ry="40" fill="#6a1f23" opacity=".6"/></svg><div><span>ЛИЧНАЯ ЛЕТОПИСЬ</span><strong>${st[0]} ${hasH?'вечеров,':'вечеров,'}<br>которые остались с вами</strong>${hasH?`<button class="chron-l" data-a="chron">Клубная летопись ${ic('arr',18,2)}</button>`:''}</div></section>
+   <section class="hsum"><div><strong>${st[0]}</strong><span>вечеров в клубе</span></div><div><strong>${st[1]}</strong><span>финальных столов</span></div><div><strong>${st[2]}</strong><span>bounty</span></div></section>
+   <div class="hyear"><span>Турниры</span><i></i></div>`;
+  if(!hasH)return `<div class="page nar">${top}<div class="pempty">${ic('hist',24,1.6)}<h2>История участий пока пуста</h2></div></div>`;
+  return `<div class="page nar">${top}<ul class="hevs">${HIST.map(h=>`<li><a class="hev" href="#/history/${h.id}"><span class="hic">${ic('trophy',18,1.8)}</span><div><strong>${esc(h.name)}</strong><small>${h.date} · ${histPlace(h.place)}</small></div><b>+${h.pts} оч.</b></a></li>`).join('')}</ul></div>`;
 };
 V.historyItem=id=>{
   const h=HIST.find(x=>x.id===id)||HIST[0];
@@ -1374,7 +1409,7 @@ function tablesBody(){
   const tn=S.tbl;
   return `<div class="tbls">${TCNT.map((c,i)=>`<button class="${tn===i+1?'on':''}" data-a="tbl" data-v="${i+1}">Стол ${i+1}<small>${c} / 10</small></button>`).join('')}</div>
    <div class="tview">${seatMarkup(tn)}</div>
-   <h2 class="s" style="margin:34px 6px 0">Bounty за столом</h2>${feedList(tn)}`;
+   ${S.demo.feed?`<h2 class="s" style="margin:34px 6px 0">Bounty за столом</h2>${feedList(tn)}`:''}`;
 }
 function openTables(){sheet('Столы турнира','<div id="tb">'+tablesBody()+'</div>','tables');}
 function openReg(id){
@@ -1433,17 +1468,17 @@ function openPersonal(){
 function openLogin(step){
   const p=S.profile;
   const mail=p.emailOk?`<div class="h">${ic('mail',24)}<div><b>Электронная почта</b><small>${esc(maskEmail(p.email))} · подтверждена</small></div></div>`
-   :`<div class="h">${ic('mail',24)}<div><b>Электронная почта</b><small>Не подключена</small></div></div>
+   :`<div class="h">${ic('mail',24)}<div><b>Электронная почта</b><small>${esc(maskEmail(p.email))} · требует подтверждения</small></div></div>
      <div class="inp"><input id="em" value="${esc(p.email)}" ${step?'readonly':''}>${step?'':`<button class="cl" data-a="clr" data-t="em">${ic('x',16,2)}</button>`}</div>
      ${step?`<div class="inp" style="margin-top:10px"><input id="cd" placeholder="Код из письма" inputmode="numeric" maxlength="4"></div><button class="sbtn" data-a="code" style="height:48px">Подтвердить код</button>`:`<button class="sbtn soft" data-a="mailok" style="height:48px">Подтвердить почту</button>`}`;
-  const tg=p.tgOk?`<div class="h">${ic('send',24)}<div><b>Telegram</b><small>Подключён · ${esc(p.tg)}</small></div></div>`
+  const tg=S.demo.tg?`<div class="h">${ic('send',24)}<div><b>Telegram</b><small>${esc(p.tg)} · подключён</small></div></div>`
    :`<div class="h">${ic('send',24)}<div><b>Telegram</b><small>Не подключён</small></div></div><button class="sbtn" data-a="tgok" style="height:48px">${ic('send',20)} Подключить Telegram</button>`;
   sheet('Способы входа',`<div class="lmg"><div class="lm">${mail}</div><div class="lm">${tg}</div>
   <div class="lm"><div class="h">${ic('shield',24)}<div><b>Удаление аккаунта</b><small>Личные данные будут удалены, история клуба — обезличена</small></div></div><button class="sbtn wine" data-a="del" style="height:48px">${ic('trash',20)} Удалить аккаунт</button></div></div>
   <p class="foot">Оба способа входа открывают один профиль, рейтинг и историю турниров.</p>`,'login');
 }
 function openSupport(){
-  sheet('Поддержка',`<div class="sc">${ic('send',24)}<label class="fl" style="margin-top:0">Что произошло?</label><div class="inp"><textarea id="sup" placeholder="Опишите проблему"></textarea></div></div><button class="sbtn" data-a="supok">Отправить обращение</button>`,'support');
+  sheet('Техническая поддержка',`<div class="sc">${ic('send',24)}<label class="fl" style="margin-top:0">Что произошло?</label><div class="inp"><textarea id="sup" placeholder="Опишите проблему"></textarea></div></div><button class="sbtn" data-a="supok">Отправить обращение</button>`,'support');
 }
 const CHRON=[{n:1,t:'Первый вечер',d:'3 ноября 2025'},{n:25,t:'25 визитов',d:'28 июля 2026'},{n:31,t:'Первый финальный стол',d:'13 августа 2026'}];
 function openChron(){
@@ -1485,6 +1520,7 @@ function openDemo(){
    <div class="dm"><div class="l">Клубная карта</div><div class="o w3">${o('card','none','Нет визитов')}${o('card','progress','В процессе')}${o('card','done','Завершена')}</div></div>
    <div class="dm"><div class="l">Есть история</div><div class="o">${o('history',true,'Да')}${o('history',false,'Нет')}</div></div>
    <div class="dm"><div class="l">Есть уведомления</div><div class="o">${o('notifs',true,'Да')}${o('notifs',false,'Нет')}</div></div>
+   <div class="dm"><div class="l">Telegram подключён</div><div class="o">${o('tg',true,'Да')}${o('tg',false,'Нет')}</div></div>
    <div class="dm"><div class="l">Лента bounty на главной</div><div class="o">${o('feed',true,'Есть')}${o('feed',false,'Нет')}</div></div>
    <div class="dm"><div class="l">Пустые данные</div><div class="o">${o('empty',true,'Да')}${o('empty',false,'Нет')}</div></div>
    <div class="dm"><div class="l">Системные экраны</div><div class="o w w3"><button data-a="sysgo" data-v="auth">Вход через Telegram</button><button data-a="sysgo" data-v="error">Ошибка загрузки</button><button data-a="sysgo" data-v="pilot">Закрытый пилот</button></div></div>
@@ -1562,7 +1598,7 @@ document.addEventListener('click',e=>{
       Object.assign(S.profile,{fio:v('f1'),nick:v('f2'),phone:v('f4')});save();closeSheet();toast('Профиль обновлён');rerenderKeep();break;}
     case 'mailok':{const v=document.getElementById('em').value.trim();if(!/^\S+@\S+\.\S+$/.test(v)){toast('Введите корректный email');break;}S.profile.email=v;openLogin(1);break;}
     case 'code':{const c=document.getElementById('cd').value.trim();if(!/^\d{4}$/.test(c)){toast('Введите 4-значный код');break;}S.profile.emailOk=true;save();openLogin(0);toast('Почта подтверждена');break;}
-    case 'tgok':S.profile.tgOk=true;save();openLogin(0);toast('Telegram подключён');break;
+    case 'tgok':S.demo.tg=true;save();openLogin(0);toast('Telegram подключён');break;
     case 'del':if(confirm('Удалить аккаунт? В прототипе данные не удаляются.'))toast('Запрос на удаление принят (демо)');break;
     case 'demo':openDemo();break;
     case 'dm':{const k=el.dataset.k;let v=el.dataset.v;if(v==='true')v=true;else if(v==='false')v=false;const sc=$('#sheet').scrollTop;S.demo[k]=v;save();render(true);openDemo();$('#sheet').scrollTop=sc;break;}
